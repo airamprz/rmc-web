@@ -80,6 +80,15 @@ const ARTISTS = [
     ig: "https://instagram.com/sheilalanga_",
   },
   {
+    id: "darlyn-sirii",
+    name: "Darlyn Sirii",
+    roles: ["Voz", "Compositor"],
+    about:
+      "Artista urbano dominicano afincado en Madrid. Su propuesta mezcla trap, reggaetón y hip hop melódico, con letras personales y callejeras. Con el álbum “Sentimientos En El Trap” y singles como “No Cantan”, “Bandida” o “Mi Ex”, consolida un sonido propio dentro de la escena.",
+    img: "/artists/darlyn.jpg", // crea esta imagen en /public/artists
+    ig: "https://instagram.com/darlynsirii",
+  },
+  {
     id: "yoel-arboleda",
     name: "Yoel Arboleda",
     roles: ["Director creativo", "Gestión", "Atención al cliente", "Comunicación", "Soporte operativo"],
@@ -150,12 +159,12 @@ function ArtistCard({ artist }) {
   const Wrapper = ig ? "a" : "div";
   const wrapperProps = ig
     ? {
-      href: ig,
-      target: "_blank",
-      rel: "noreferrer",
-      title: `${name} en Instagram`,
-      "aria-label": `${name} — abrir Instagram`,
-    }
+        href: ig,
+        target: "_blank",
+        rel: "noreferrer",
+        title: `${name} en Instagram`,
+        "aria-label": `${name} — abrir Instagram`,
+      }
     : {};
 
   return (
