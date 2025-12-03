@@ -313,11 +313,12 @@ export default function HomePage() {
               </h2>
 
               <p className="mt-4 text-sm sm:text-base text-zinc-300 max-w-xl leading-relaxed">
-                Adelanto exclusivo del próximo lanzamiento de RMC. Un tema
-                oscuro y directo donde 509flakko y BigFicre combinan actitud,
-                barras y atmósfera. Esta preview es solo una parte del tema
-                completo que llega a plataformas el 23 de diciembre.
+                Adelanto exclusivo del próximo lanzamiento de RMC. Un perreo con
+                energía, ritmo y actitud donde 509flakko y BigFicre conectan con
+                un estilo fresco y pegajoso. Esta preview es solo una parte del
+                tema completo, disponible en plataformas el 23 de diciembre.
               </p>
+
 
               {/* Fecha de lanzamiento */}
               <div className="mt-6 flex flex-wrap items-center gap-4">
