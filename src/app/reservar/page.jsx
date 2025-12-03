@@ -1,8 +1,9 @@
 "use client";
+
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { HiLockClosed } from "react-icons/hi2";
+import { HiLockClosed } from "react-icons/hi";
 
 /* ===========================
    SERVICIOS PRINCIPALES
@@ -87,7 +88,6 @@ export default function ReservarPage() {
   const disabledInputClass = IS_LOCKED
     ? "opacity-60 cursor-not-allowed"
     : "";
-  const disabledMainTextClass = IS_LOCKED ? "text-zinc-400" : "";
 
   return (
     <>
@@ -121,7 +121,7 @@ export default function ReservarPage() {
                 </p>
                 <p className="mb-2">
                   Estamos ajustando el sistema de citas y pagos para que todo
-                  funcione de forma segura y profesional.
+                  funcione de forma seguro y profesional.
                 </p>
                 <p className="mt-2 text-zinc-400">
                   Si quieres reservar estudio, vídeo o sesión de fotos,
@@ -147,15 +147,15 @@ export default function ReservarPage() {
                 </p>
                 <p className="mt-2 text-zinc-400">
                   Tras hacer la reserva, el equipo de RMC se pondrá en contacto
-                  contigo para confirmar detalles, revisar posibles extras y
-                  asegurar que todo esté listo para tu sesión.
+                  contigo para confirmar detalles,
+                  revisar posibles extras y asegurar que todo esté listo para tu sesión.
                 </p>
               </>
             )}
           </div>
 
           {/* FORMULARIO (VISUAL IGUAL, PERO BLOQUEADO) */}
-          <div className={clsx("space-y-6", disabledMainTextClass)}>
+          <div className="space-y-6">
             {/* Servicio */}
             <div>
               <label className="block mb-2 font-medium">Servicio</label>
