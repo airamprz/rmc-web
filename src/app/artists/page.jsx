@@ -17,6 +17,15 @@ const ARTISTS = [
     ig: "https://instagram.com/fermoralesp6",
   },
   {
+    id: "yaiza-deniz",
+    name: "Yaiza Deniz",
+    roles: ["Directora creativa"],
+    about:
+      "Responsable de definir la estética y el universo visual de RMC. Lidera los conceptos creativos, coordina sesiones y vela porque la imagen del colectivo sea coherente, sólida y reconocible.",
+    img: "/artists/yaiza.jpg", // asegúrate de crear esta imagen en /public/artists
+    ig: "https://instagram.com/ydenizmed",
+  },
+  {
     id: "509flakko",
     name: "509flakko",
     roles: ["CEO", "Voz", "Compositor"],
@@ -80,7 +89,6 @@ const ARTISTS = [
     ig: "https://instagram.com/arboledafx",
   },
 ];
-
 
 /* ---------- Página ---------- */
 export default function ArtistsPage() {
