@@ -97,6 +97,15 @@ const ARTISTS = [
     img: "/artists/arboleda.jpg",
     ig: "https://instagram.com/arboledafx",
   },
+  {
+    id: "cb-one",
+    name: "CB ONE",
+    roles: ["Voz", "Compositor"],
+    about:
+      "Artista urbano emergente cuya música combina rap moderno e influencias melódicas, destacando por un sonido atmosférico y letras sinceras. Su crecimiento en plataformas digitales refleja una propuesta sólida y en constante evolución dentro de la escena independiente.",
+    img: "/artists/cbone.jpg", // crea esta imagen en /public/artists
+    ig: "https://www.instagram.com/cb.one1/",
+  },
 ];
 
 /* ---------- Página ---------- */
@@ -159,12 +168,12 @@ function ArtistCard({ artist }) {
   const Wrapper = ig ? "a" : "div";
   const wrapperProps = ig
     ? {
-        href: ig,
-        target: "_blank",
-        rel: "noreferrer",
-        title: `${name} en Instagram`,
-        "aria-label": `${name} — abrir Instagram`,
-      }
+      href: ig,
+      target: "_blank",
+      rel: "noreferrer",
+      title: `${name} en Instagram`,
+      "aria-label": `${name} — abrir Instagram`,
+    }
     : {};
 
   return (
