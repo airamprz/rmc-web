@@ -10,6 +10,7 @@ import { HiLockClosed } from "react-icons/hi2";
 const nav = [
   { href: "/", label: "Inicio" },
   { href: "/artists", label: "Artistas" },
+  { href: "/news", label: "News" },
   { href: "/shop", label: "Shop" },
   { href: "/reservar", label: "Servicios", locked: true },
 ];
