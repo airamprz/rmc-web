@@ -106,6 +106,15 @@ const ARTISTS = [
     img: "/artists/cbone.jpg", // crea esta imagen en /public/artists
     ig: "https://www.instagram.com/cb.one1/",
   },
+  {
+    id: "BG01",
+    name: "BG01",
+    roles: ["Voz", "Compositor"],
+    about:
+      "Artista urbano emergente cuya música combina rap moderno e influencias melódicas, destacando por un sonido atmosférico y letras sinceras. Su crecimiento en plataformas digitales refleja una propuesta sólida y en constante evolución dentro de la escena independiente.",
+    img: "/artists/bgone.jpg", // crea esta imagen en /public/artists
+    ig: "https://www.instagram.com/bg_one1/",
+  },
 ];
 
 /* ---------- Página ---------- */

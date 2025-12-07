@@ -92,9 +92,7 @@ export default function HomePage() {
               <motion.div
                 className="absolute inset-0 rounded-full blur-3xl opacity-50"
                 style={{ background: "var(--accent-soft)" }}
-                animate={
-                  prefersReduced ? undefined : { scale: [1, 1.04, 1] }
-                }
+                animate={prefersReduced ? undefined : { scale: [1, 1.04, 1] }}
                 transition={
                   prefersReduced
                     ? undefined
@@ -319,7 +317,6 @@ export default function HomePage() {
                 tema completo, disponible en plataformas el 23 de diciembre.
               </p>
 
-
               {/* Fecha de lanzamiento */}
               <div className="mt-6 flex flex-wrap items-center gap-4">
                 <div className="rounded-2xl border border-white/15 bg-black/50 px-4 py-3">
@@ -416,6 +413,11 @@ export default function HomePage() {
                 whileInView="show"
               >
                 {[
+                  {
+                    tag: "Single",
+                    title: "BG01 - GHETTO",
+                    yt: "https://www.youtube.com/embed/n_Pfo3FcPyY?si=riXLOTFuXRUPpREh",
+                  },
                   {
                     tag: "Nuevo",
                     title: "Star Feeling — Sheyla Langa (feat. Bravo Steez)",
