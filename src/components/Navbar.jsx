@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -54,9 +55,7 @@ export default function Navbar() {
     const isDisabled = locked;
 
     const Component = isDisabled ? "button" : Link;
-    const componentProps = isDisabled
-      ? { type: "button" }
-      : { href };
+    const componentProps = isDisabled ? { type: "button" } : { href };
 
     return (
       <Component
@@ -73,7 +72,10 @@ export default function Navbar() {
       >
         <span>{label}</span>
         {isDisabled && (
-          <HiLockClosed className="h-3.5 w-3.5 opacity-80" aria-hidden="true" />
+          <HiLockClosed
+            className="h-3.5 w-3.5 opacity-80"
+            aria-hidden="true"
+          />
         )}
 
         {/* Línea activa bajo el ítem solo si NO está bloqueado */}
