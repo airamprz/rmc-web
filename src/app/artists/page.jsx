@@ -113,7 +113,7 @@ const ARTISTS = [
     about:
       "Artista urbano emergente que fusiona rap moderno e influencias melódicas. Su sonido envolvente y su propuesta honesta lo consolidan como un perfil con gran potencial dentro de la nueva ola independiente.",
     img: "/artists/bgone.jpg",
-    ig: "https://www.instagram.com/bg_one1/",
+    ig: "https://www.instagram.com/bg_one018/",
   },
   {
     id: "649babywhite",
