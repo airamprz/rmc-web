@@ -8,11 +8,29 @@ import { motion } from "framer-motion";
 /* ---------- Datos ---------- */
 const ARTISTS = [
   {
+    id: "509flakko",
+    name: "509flakko",
+    roles: ["Founder & CEO", "Head of A&R", "Voz", "Compositor"],
+    about:
+      "Fundador y CEO de Real Motion Cartel. Líder estratégico y responsable de A&R, define la visión creativa, el desarrollo de artistas y la identidad global del sello. Como artista, destaca por un sonido influenciado por el trap de Detroit, con una estética cruda, experimental y profundamente personal que sirve como pilar sonoro del colectivo.",
+    img: "/artists/flakko.jpg",
+    ig: "https://instagram.com/509flakko",
+  },
+  {
+    id: "big-ficre",
+    name: "Big Ficre",
+    roles: ["COO", "Mano derecha del CEO", "Voz", "Compositor"],
+    about:
+      "Chief Operating Officer y mano derecha del CEO en RMC. Supervisa la ejecución operativa del sello y participa en la toma de decisiones clave, asegurando que cada proyecto avance con coherencia y dirección. Como artista, aporta una energía agresiva y dominante que refuerza la identidad del colectivo.",
+    img: "/artists/big-ficre.jpg",
+    ig: "https://instagram.com/bigficre",
+  },
+  {
     id: "fernando-morales",
     name: "Fernando Morales",
-    roles: ["Manager", "Administrativo", "Estrategia", "Dirección de proyectos"],
+    roles: ["Operations & Strategy Manager", "Administración", "Dirección de proyectos"],
     about:
-      "Encargado de la gestión y dirección estratégica de RMC. Supervisa la planificación, coordinación y administración del colectivo, asegurando que cada proyecto mantenga coherencia, calidad y visión a largo plazo.",
+      "Responsable de operaciones y estrategia en RMC. Supervisa la ejecución de proyectos, organiza la estructura interna del sello y apoya la toma de decisiones clave junto al CEO y el COO. Garantiza que cada movimiento del colectivo avance con coherencia, planificación y dirección profesional.",
     img: "/artists/fer.jpg",
     ig: "https://instagram.com/fermoralesp6",
   },
@@ -21,25 +39,25 @@ const ARTISTS = [
     name: "Yaiza Deniz",
     roles: ["Directora creativa"],
     about:
-      "Responsable de definir la estética y el universo visual de RMC. Lidera los conceptos creativos, coordina sesiones y vela porque la imagen del colectivo sea coherente, sólida y reconocible.",
-    img: "/artists/yaiza.jpg", // asegúrate de crear esta imagen en /public/artists
+      "Responsable de construir y supervisar la identidad visual de RMC. Define la estética del sello, lidera las propuestas conceptuales, coordina sesiones creativas y garantiza que la imagen del colectivo mantenga coherencia, fuerza y reconocimiento.",
+    img: "/artists/yaiza.jpg",
     ig: "https://instagram.com/ydenizmed",
   },
   {
-    id: "509flakko",
-    name: "509flakko",
-    roles: ["CEO", "Voz", "Compositor"],
+    id: "yoel-arboleda",
+    name: "Yoel Arboleda",
+    roles: ["Finance & Operations Coordinator", "Gestión", "Atención al cliente", "Comunicación", "Soporte operativo"],
     about:
-      "Artista con un sonido influenciado por el trap de Detroit y la escena underground. Su voz grave y estilo oscuro reflejan una identidad auténtica y directa dentro del colectivo RMC.",
-    img: "/artists/flakko.jpg",
-    ig: "https://instagram.com/509flakko",
+      "Coordinador de finanzas y operaciones en RMC. Gestiona la comunicación con clientes y artistas, organiza la operativa diaria y brinda soporte administrativo y logístico. Su labor garantiza que cada proyecto fluya con calidad, eficiencia y profesionalidad.",
+    img: "/artists/arboleda.jpg",
+    ig: "https://instagram.com/arboledafx",
   },
   {
     id: "xini",
     name: "Xini",
     roles: ["Voz", "Compositor"],
     about:
-      "Artista con un estilo que mezcla trap y melodías sad. Destaca por su enfoque experimental y su capacidad para crear atmósferas únicas dentro del colectivo RMC.",
+      "Artista que mezcla trap con melodías de corte más introspectivo. Su enfoque experimental y su capacidad para crear atmósferas propias aportan una dimensión emocional y distintiva dentro del roster de RMC.",
     img: "/artists/xini.jpg",
     ig: "https://instagram.com/xini509",
   },
@@ -48,34 +66,25 @@ const ARTISTS = [
     name: "Young Cmon",
     roles: ["Voz", "Compositor"],
     about:
-      "Artista con un sonido más mainstream dentro del colectivo RMC. Su enfoque melódico y su capacidad para conectar con el público lo convierten en una de las voces más versátiles del grupo.",
+      "Artista con un sonido brillante, mainstream y experimental. Su enfoque melódico y su capacidad para conectar con el público lo convierten en una de las voces más versátiles y con mayor proyección dentro del colectivo RMC.",
     img: "/artists/young.jpg",
     ig: "https://instagram.com/young.cmon",
-  },
-  {
-    id: "big-ficre",
-    name: "Big Ficre",
-    roles: ["Voz", "Compositor"],
-    about:
-      "Artista con un estilo agresivo y presencia dominante en cada tema. Combina actitud y técnica, aportando la fuerza y el carácter que definen el sonido del colectivo RMC.",
-    img: "/artists/big-ficre.jpg",
-    ig: "https://instagram.com/bigficre",
   },
   {
     id: "elsevi09",
     name: "ElSevi09",
     roles: ["Voz", "Compositor"],
     about:
-      "Artista con un sonido callejero y auténtico. Su estilo directo y sus letras reflejan vivencias reales, aportando crudeza y honestidad al sonido del colectivo RMC.",
+      "Artista con un sonido callejero y auténtico. Su estilo directo y sus letras reflejan vivencias reales, aportando crudeza, carácter y honestidad al sonido del colectivo RMC.",
     img: "/artists/elsevi.jpg",
     ig: "https://instagram.com/elseviii09",
   },
   {
     id: "sheila",
     name: "Sheila Langa",
-    roles: ["Voz", "Compositor"],
+    roles: ["Voz", "Compositora"],
     about:
-      "Artista con una voz cálida y una presencia escénica natural. Aporta un enfoque melódico y emocional al colectivo RMC, destacando por su autenticidad y conexión con el público.",
+      "Artista con una voz cálida y una presencia natural. Aporta un enfoque melódico y emocional al colectivo RMC, destacando por su autenticidad y su capacidad de conectar con el público.",
     img: "/artists/sheila1.jpg",
     ig: "https://instagram.com/sheilalanga_",
   },
@@ -84,18 +93,9 @@ const ARTISTS = [
     name: "Darlyn Sirii",
     roles: ["Voz", "Compositor"],
     about:
-      "Artista urbano dominicano afincado en Madrid. Su propuesta mezcla trap, reggaetón y hip hop melódico, con letras personales y callejeras. Con el álbum “Sentimientos En El Trap” y singles como “No Cantan”, “Bandida” o “Mi Ex”, consolida un sonido propio dentro de la escena.",
-    img: "/artists/darlyn.jpg", // crea esta imagen en /public/artists
+      "Artista urbano dominicano afincado en Madrid. Su propuesta mezcla trap, reggaetón y hip hop melódico, con letras personales y callejeras. Con el álbum “Sentimientos En El Trap” y singles como “No Cantan”, “Bandida” o “Mi Ex”, consolida un sonido propio dentro de la escena y aporta diversidad al universo RMC.",
+    img: "/artists/darlyn.jpg",
     ig: "https://instagram.com/darlynsirii",
-  },
-  {
-    id: "yoel-arboleda",
-    name: "Yoel Arboleda",
-    roles: ["Director creativo", "Gestión", "Atención al cliente", "Comunicación", "Soporte operativo"],
-    about:
-      "Director creativo y responsable de la relación con clientes. Coordina la atención, la comunicación y la operativa diaria para que cada proyecto fluya con calidad y coherencia visual.",
-    img: "/artists/arboleda.jpg",
-    ig: "https://instagram.com/arboledafx",
   },
   {
     id: "cb-one",
@@ -103,7 +103,7 @@ const ARTISTS = [
     roles: ["Voz", "Compositor"],
     about:
       "Artista urbano emergente cuya música combina rap moderno e influencias melódicas, destacando por un sonido atmosférico y letras sinceras. Su crecimiento en plataformas digitales refleja una propuesta sólida y en constante evolución dentro de la escena independiente.",
-    img: "/artists/cbone.jpg", // crea esta imagen en /public/artists
+    img: "/artists/cbone.jpg",
     ig: "https://www.instagram.com/cb.one1/",
   },
   {
@@ -111,11 +111,39 @@ const ARTISTS = [
     name: "BG01",
     roles: ["Voz", "Compositor"],
     about:
-      "Artista urbano emergente cuya música combina rap moderno e influencias melódicas, destacando por un sonido atmosférico y letras sinceras. Su crecimiento en plataformas digitales refleja una propuesta sólida y en constante evolución dentro de la escena independiente.",
-    img: "/artists/bgone.jpg", // crea esta imagen en /public/artists
+      "Artista urbano emergente que fusiona rap moderno e influencias melódicas. Su sonido envolvente y su propuesta honesta lo consolidan como un perfil con gran potencial dentro de la nueva ola independiente.",
+    img: "/artists/bgone.jpg",
     ig: "https://www.instagram.com/bg_one1/",
   },
+  {
+    id: "649babywhite",
+    name: "649babywhite",
+    roles: ["Voz", "Rapero", "Compositor"],
+    about:
+      "Rapero de estética underground con un sonido claramente influenciado por la escuela de Detroit. Su estilo destaca por flows cortantes, patrones frenéticos y una energía cruda que recuerda a la nueva ola del midwest, posicionándolo como uno de los perfiles más distintivos dentro del universo RMC.",
+    img: "/artists/babywhite.jpg",
+    ig: "https://instagram.com/649babywhite",
+  },
+  {
+    id: "nico-arrocha",
+    name: "Nico Arrocha",
+    roles: ["Voz", "Compositor"],
+    about:
+      "Artista canario en ascenso cuyo sonido fusiona raíces locales con una estética contemporánea y mainstream. Su versatilidad le permite moverse entre el rap, el urbano melódico y otros estilos modernos, manteniendo siempre un sello propio influenciado por la identidad musical de Canarias.",
+    img: "/artists/nicoarrocha.jpg",
+    ig: "https://instagram.com/nicoarrocha.fr",
+  },
+  {
+    id: "julian-marrero",
+    name: "Julián Marrero",
+    roles: ["DJ"],
+    about:
+      "DJ de Lanzarote reconocido por su presencia sólida en la escena musical de la isla. Centrado principalmente en la electrónica y la música urbana, destaca por una selección versátil, mezclas fluidas y un enfoque orientado al directo, encajando de forma natural en ambientes de club y eventos urbanos.",
+    img: "/artists/julian.jpg",
+    ig: "https://instagram.com/julian_marrero",
+  },
 ];
+
 
 /* ---------- Página ---------- */
 export default function ArtistsPage() {

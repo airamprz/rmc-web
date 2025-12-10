@@ -1,11 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { motion, MotionConfig, useReducedMotion } from "framer-motion";
+
+import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Button from "@/components/Button";
-import Navbar from "../components/Navbar";
-import { motion, MotionConfig, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
 
 /* ---------- ClientOnly: render solo en cliente ---------- */
 function ClientOnly({ children }) {
@@ -263,7 +264,7 @@ export default function HomePage() {
               {
                 title: "💡 Filosofía",
                 text:
-                  "Movimiento real, sin postureo. RMC combina profesionalismo y calle: estética cuidada, estrategia clara y resultados medibles. Cada pieza —tema, vídeo, campaña o drop— tiene una intención concreta y forma parte de un universo visual y sonoro reconocible.",
+                  "Movimiento real, sin postureo. RMC combina profesionalismo y calle: estética cuidada, estrategia clara y resultados medibles. Cada pieza —tema, vídeo, campaña o drop— tiene una intención concreto y forma parte de un universo visual y sonoro reconocible.",
               },
             ].map((block) => (
               <motion.div
@@ -283,14 +284,14 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 🆕 LANZAMIENTO DESTACADO – DOBLE F UNA NOCHE CON UN G */}
+        {/* LANZAMIENTO DESTACADO – UNA NOCHE CON UN G */}
         <section
           id="featured-release"
           aria-labelledby="featured-release-title"
           className="border-y border-white/10 bg-gradient-to-b from-white/5 via-black to-black"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-12 grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center">
-            {/* Texto + fecha + audio */}
+            {/* Texto */}
             <motion.div
               variants={fadeUp}
               initial={false}
@@ -350,7 +351,7 @@ export default function HomePage() {
               </div>
             </motion.div>
 
-            {/* Portada grande */}
+            {/* Portada */}
             <motion.div
               variants={cardVariant}
               initial={false}
@@ -361,11 +362,10 @@ export default function HomePage() {
               <div className="relative aspect-[4/5]">
                 <Image
                   src="/covers/una-noche-con-un-g.jpg"
-                  alt="Portada del próximo single Doble F Una Noche Con Un G"
+                  alt="Portada del próximo single Una Noche Con Un G"
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 80vw, 400px"
-                  priority={false}
                 />
 
                 {/* Badge fecha */}
@@ -385,7 +385,7 @@ export default function HomePage() {
                     Próximo single
                   </p>
                   <p className="mt-0.5 text-sm sm:text-base font-semibold text-white line-clamp-2">
-                    Doble F Una Noche Con Un G — 509flakko ft BigFicre
+                    Una Noche Con Un G — 509flakko ft BigFicre
                   </p>
                 </div>
               </div>
@@ -560,3 +560,4 @@ export default function HomePage() {
     </>
   );
 }
+

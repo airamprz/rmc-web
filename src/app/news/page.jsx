@@ -8,9 +8,106 @@ import Navbar from "@/components/Navbar"; // asegúrate de que esta ruta apunta 
 
 // Portada Young Cmon (debes tener /public/news/youngcmon.jpg)
 const YOUNG_CMON_COVER = "/news/youngcmon.jpg";
+// Portada expansión de roster (cbpixelado 3000x3000 en /public/artist)
+const ROSTER_EXPANSION_COVER = "/news/cbpixelado.jpg";
 
 const posts = [
-  // NOTICIA MÁS NUEVA: LABEL EN DITTO
+  // NOTICIA MÁS NUEVA: EXPANSIÓN DEL ROSTER
+  {
+    id: "rmc-roster-expansion",
+    title: "RMC expande su roster con nuevos talentos emergentes",
+    date: "2025-12-10",
+    tag: "Fichajes",
+    cover: ROSTER_EXPANSION_COVER,
+    excerpt:
+      "Real Motion Cartel entra en una nueva etapa de crecimiento, incorporando varios artistas emergentes con propuestas sólidas, identidad propia y una proyección real dentro de la escena urbana.",
+    body: () => (
+      <article className="prose prose-invert prose-sm md:prose-base max-w-none">
+        {/* Imagen del roster dentro de la noticia */}
+        <figure className="mb-6 flex items-center justify-center">
+          <div className="relative h-40 w-40 sm:h-52 sm:w-52 rounded-3xl overflow-hidden border border-white/15 shadow-lg shadow-black/40">
+            <Image
+              src={ROSTER_EXPANSION_COVER}
+              alt="Montaje del roster actual de Real Motion Cartel"
+              fill
+              className="object-cover"
+              sizes="208px"
+            />
+          </div>
+        </figure>
+
+        <p>
+          Real Motion Cartel continúa consolidándose como uno de los colectivos
+          más activos y con mayor proyección dentro de la escena urbana
+          independiente. En las últimas semanas, el sello ha estado trabajando
+          de forma interna en la ampliación de su roster, incorporando{" "}
+          <strong>nuevos talentos emergentes</strong> que destacan por su
+          identidad, disciplina y visión de carrera.
+        </p>
+
+        <h3>Una nueva fase para el movimiento RMC</h3>
+        <p>
+          Esta nueva etapa no busca fichar por cantidad, sino por criterio. El
+          objetivo es construir un <strong>roster sólido y coherente</strong>,
+          donde cada artista tenga un papel claro dentro del universo creativo
+          de RMC:
+        </p>
+        <ul>
+          <li>Perfiles con sonido propio y narrativa reconocible.</li>
+          <li>
+            Artistas capaces de defender su propuesta tanto en estudio como en
+            directo.
+          </li>
+          <li>
+            Gente con mentalidad profesional y compromiso real con el proyecto.
+          </li>
+        </ul>
+
+        <h3>Nuevas caras, mismo ADN</h3>
+        <p>
+          Las nuevas incorporaciones al roster recorren distintos registros:
+          desde el trap más crudo y cercano a la escuela de Detroit hasta
+          propuestas melódicas, sonidos más mainstream y enfoques claramente
+          experimentales. RMC no se limita a un solo molde, sino que apuesta por{" "}
+          <strong>un ecosistema de estilos que comparten actitud y visión</strong>.
+        </p>
+
+        <p>
+          La idea es que cada artista aporte algo propio al catálogo, pero que
+          todos compartan una misma dirección: autenticidad, criterio estético y
+          ambición. En este sentido, la expansión del roster refuerza la idea de
+          RMC como <strong>sello y movimiento</strong>, no solo como plataforma
+          puntual de lanzamientos.
+        </p>
+
+        <h3>Estructura y acompañamiento real</h3>
+        <p>
+          Este crecimiento artístico va acompañado de una estructura interna
+          cada vez más definida: dirección ejecutiva, operaciones, área creativa
+          y coordinación estratégica. Todo ello permite que los fichajes no se
+          queden en un simple anuncio, sino que se traduzcan en{" "}
+          <strong>planes de trabajo concretos</strong>, calendarios, contenido y
+          proyección a medio y largo plazo.
+        </p>
+
+        <h3>Lo que viene</h3>
+        <p>
+          En los próximos meses, RMC irá presentando de forma oficial a los
+          nuevos integrantes del roster, así como sus primeros lanzamientos y
+          colaboraciones dentro del sello. El foco está puesto en construir un
+          catálogo que hable por sí mismo y en posicionar a Real Motion Cartel
+          como <strong>referente dentro de la nueva ola independiente</strong>.
+        </p>
+
+        <p className="text-sm text-neutral-400">
+          Próximamente se revelarán nuevos nombres, proyectos y fechas de
+          lanzamiento dentro de esta nueva etapa de expansión de RMC.
+        </p>
+      </article>
+    ),
+  },
+
+  // NOTICIA: LABEL EN DITTO
   {
     id: "rmc-label-ditto",
     title: "Real Motion Cartel lanza su propio label dentro de Ditto",
@@ -44,8 +141,8 @@ const posts = [
             Gestionar mejor derechos, metadata y organización del catálogo.
           </li>
           <li>
-            Construir una identidad clara alrededor de los artistas vinculados al
-            proyecto.
+            Construir una identidad clara alrededor de los artistas vinculados
+            al proyecto.
           </li>
           <li>
             Impulsar estrategias conjuntas de crecimiento y visibilidad.
@@ -123,7 +220,7 @@ const posts = [
     ),
   },
 
-  // NOTICIA ANTERIOR: FICHAJE YOUNG CMON
+  // NOTICIA: FICHAJE YOUNG CMON
   {
     id: "young-cmon-fichaje-rmc",
     title: "Real Motion Cartel incorpora a Young Cmon como primer fichaje",
@@ -226,18 +323,20 @@ const posts = [
   },
 ];
 
+// 🔧 AQUÍ ESTABA EL ERROR — QUITAMOS LOS TIPOS
 function PostCard({ post }) {
   return (
     <article className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/5 via-white/[0.03] to-black/80 shadow-xl shadow-black/40">
       {/* Cover solo si existe */}
       {post.cover && (
-        <div className="relative w-full aspect-[16/9]">
+        <div className="relative w-full aspect-square">
           <Image
             src={post.cover}
             alt={post.title}
             fill
             className="object-cover"
-            priority
+            priority={post.id === "rmc-roster-expansion"}
+            sizes="(min-width: 1024px) 896px, (min-width: 640px) 100vw, 100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-zinc-100">
@@ -262,7 +361,7 @@ function PostCard({ post }) {
       {/* Contenido */}
       <div className="p-5 sm:p-7 space-y-4">
         <header>
-          <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">
+          <p className="text-xs uppercase tracking-[0.2em] text-zinc-400">
             Notas de prensa · Real Motion Cartel
           </p>
           <h2 className="text-2xl sm:text-3xl font-semibold text-white leading-tight">
