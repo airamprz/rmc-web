@@ -8,11 +8,94 @@ import Navbar from "@/components/Navbar"; // asegúrate de que esta ruta apunta 
 
 // Portada Young Cmon (debes tener /public/news/youngcmon.jpg)
 const YOUNG_CMON_COVER = "/news/youngcmon.jpg";
-// Portada expansión de roster (cbpixelado 3000x3000 en /public/artist)
+// Portada expansión de roster (cbpixelado 3000x3000 en /public/news)
 const ROSTER_EXPANSION_COVER = "/news/cbpixelado.jpg";
+// Portada fichaje Pablo Vera (asegúrate de tener /public/news/pablovera.jpg)
+const PABLO_VERA_COVER = "/news/pablovera.jpg";
 
 const posts = [
-  // NOTICIA MÁS NUEVA: EXPANSIÓN DEL ROSTER
+  // NOTICIA MÁS NUEVA: FICHAJE PABLO VERA (PV)
+  {
+    id: "rmc-fichaje-pablo-vera",
+    title: "Real Motion Cartel incorpora a Pablo Vera como estilista oficial del colectivo",
+    date: "2025-12-11",
+    tag: "Equipo",
+    cover: PABLO_VERA_COVER,
+    excerpt:
+      "Real Motion Cartel refuerza su estructura creativa con la incorporación de Pablo Vera (PV) como estilista oficial del proyecto, consolidando la identidad visual del colectivo.",
+    body: () => (
+      <article className="prose prose-invert prose-sm md:prose-base max-w-none">
+        <p>
+          Real Motion Cartel anuncia oficialmente la incorporación de{" "}
+          <strong>Pablo Vera (PV)</strong> como{" "}
+          <strong>estilista principal del colectivo</strong>, un movimiento
+          estratégico que refuerza la identidad visual y la presencia estética del
+          proyecto en una etapa de crecimiento clave.
+        </p>
+
+        <h3>Un rol esencial en la nueva estructura creativa</h3>
+        <p>
+          El fichaje de PV responde a la necesidad de consolidar la coherencia
+          visual del colectivo, integrando el vestuario y la estética como parte
+          fundamental del universo RMC. Su rol abarca la{" "}
+          <strong>
+            búsqueda de prendas, selección de outfits, dirección de estilo y
+            curaduría visual
+          </strong>{" "}
+          para videoclips, sesiones fotográficas, eventos, contenido digital y
+          apariciones públicas.
+        </p>
+
+        <p>
+          Su criterio aporta un enfoque profesional y contemporáneo, combinando
+          sensibilidad artística, entendimiento de marca y dominio de tendencias
+          urbanas, fashion y street-luxury.
+        </p>
+
+        <h3>Lo que aporta PV a Real Motion Cartel</h3>
+        <ul>
+          <li>
+            <strong>Construcción de identidad visual</strong> para cada artista
+            del roster.
+          </li>
+          <li>
+            <strong>Dirección estética</strong> en videoclips, sesiones y
+            campañas internas.
+          </li>
+          <li>
+            <strong>Selección de outfits personalizados</strong> que refuercen
+            narrativa y posicionamiento.
+          </li>
+          <li>
+            <strong>Coherencia visual del proyecto</strong> en todas sus áreas
+            creativas.
+          </li>
+        </ul>
+
+        <p>
+          Con su incorporación, RMC da un paso más hacia la profesionalización
+          global: desde la música y los visuales hasta la moda y la presencia
+          escénica, asegurando que la marca mantenga un estándar estético alineado
+          con sus ambiciones creativas.
+        </p>
+
+        <h3>La moda como pilar del movimiento RMC</h3>
+        <p>
+          La estética siempre ha sido parte central del ADN de Real Motion Cartel.
+          Con PV al frente del área de estilo, el colectivo fortalece su
+          narrativa visual y se posiciona como un proyecto donde sonido,
+          identidad, imagen y estrategia avanzan de forma unificada.
+        </p>
+
+        <p className="text-sm text-neutral-400">
+          En las próximas semanas se presentarán nuevas sesiones, campañas
+          visuales y contenido trabajado bajo la dirección estética de PV.
+        </p>
+      </article>
+    ),
+  },
+
+  // NOTICIA: EXPANSIÓN DEL ROSTER
   {
     id: "rmc-roster-expansion",
     title: "RMC expande su roster con nuevos talentos emergentes",
@@ -23,19 +106,6 @@ const posts = [
       "Real Motion Cartel entra en una nueva etapa de crecimiento, incorporando varios artistas emergentes con propuestas sólidas, identidad propia y una proyección real dentro de la escena urbana.",
     body: () => (
       <article className="prose prose-invert prose-sm md:prose-base max-w-none">
-        {/* Imagen del roster dentro de la noticia */}
-        <figure className="mb-6 flex items-center justify-center">
-          <div className="relative h-40 w-40 sm:h-52 sm:w-52 rounded-3xl overflow-hidden border border-white/15 shadow-lg shadow-black/40">
-            <Image
-              src={ROSTER_EXPANSION_COVER}
-              alt="Montaje del roster actual de Real Motion Cartel"
-              fill
-              className="object-cover"
-              sizes="208px"
-            />
-          </div>
-        </figure>
-
         <p>
           Real Motion Cartel continúa consolidándose como uno de los colectivos
           más activos y con mayor proyección dentro de la escena urbana
@@ -49,8 +119,8 @@ const posts = [
         <p>
           Esta nueva etapa no busca fichar por cantidad, sino por criterio. El
           objetivo es construir un <strong>roster sólido y coherente</strong>,
-          donde cada artista tenga un papel claro dentro del universo creativo
-          de RMC:
+          donde cada artista tenga un papel claro dentro del universo creativo de
+          RMC:
         </p>
         <ul>
           <li>Perfiles con sonido propio y narrativa reconocible.</li>
@@ -69,7 +139,10 @@ const posts = [
           desde el trap más crudo y cercano a la escuela de Detroit hasta
           propuestas melódicas, sonidos más mainstream y enfoques claramente
           experimentales. RMC no se limita a un solo molde, sino que apuesta por{" "}
-          <strong>un ecosistema de estilos que comparten actitud y visión</strong>.
+          <strong>
+            un ecosistema de estilos que comparten actitud y visión
+          </strong>
+          .
         </p>
 
         <p>
@@ -82,9 +155,9 @@ const posts = [
 
         <h3>Estructura y acompañamiento real</h3>
         <p>
-          Este crecimiento artístico va acompañado de una estructura interna
-          cada vez más definida: dirección ejecutiva, operaciones, área creativa
-          y coordinación estratégica. Todo ello permite que los fichajes no se
+          Este crecimiento artístico va acompañado de una estructura interna cada
+          vez más definida: dirección ejecutiva, operaciones, área creativa y
+          coordinación estratégica. Todo ello permite que los fichajes no se
           queden en un simple anuncio, sino que se traduzcan en{" "}
           <strong>planes de trabajo concretos</strong>, calendarios, contenido y
           proyección a medio y largo plazo.
@@ -141,8 +214,8 @@ const posts = [
             Gestionar mejor derechos, metadata y organización del catálogo.
           </li>
           <li>
-            Construir una identidad clara alrededor de los artistas vinculados
-            al proyecto.
+            Construir una identidad clara alrededor de los artistas vinculados al
+            proyecto.
           </li>
           <li>
             Impulsar estrategias conjuntas de crecimiento y visibilidad.
@@ -323,7 +396,7 @@ const posts = [
   },
 ];
 
-// 🔧 AQUÍ ESTABA EL ERROR — QUITAMOS LOS TIPOS
+// 🔧 COMPONENTE DE TARJETA DE NOTICIA
 function PostCard({ post }) {
   return (
     <article className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/5 via-white/[0.03] to-black/80 shadow-xl shadow-black/40">
@@ -335,7 +408,7 @@ function PostCard({ post }) {
             alt={post.title}
             fill
             className="object-cover"
-            priority={post.id === "rmc-roster-expansion"}
+            priority={post.id === "rmc-fichaje-pablo-vera"}
             sizes="(min-width: 1024px) 896px, (min-width: 640px) 100vw, 100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
