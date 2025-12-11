@@ -44,6 +44,19 @@ const ARTISTS = [
     ig: "https://instagram.com/ydenizmed",
   },
   {
+    id: "monru",
+    name: "Monru",
+    roles: [
+      "Operations Coordinator",
+      "Talent Support",
+      "Estrategia & Organización"
+    ],
+    about:
+      "Coordinador de operaciones en RMC, con un rol clave en la organización interna, la gestión del roster y el soporte estratégico del sello. Aporta estructura, seguimiento y coherencia a los proyectos, coordinando agendas, sesiones y lanzamientos, y asegurando que cada artista cuente con el apoyo necesario para avanzar. Con buena presencia y capacidad para liderar, participa en la relación directa con el roster y colabora en labores de scouting, aportando criterio, orden y visión en la expansión del colectivo.",
+    img: "/artists/monru.jpg",
+    ig: "https://instagram.com/monru" // cámbialo si procede
+  },
+  {
     id: "yoel-arboleda",
     name: "Yoel Arboleda",
     roles: ["Finance & Operations Coordinator", "Gestión", "Atención al cliente", "Comunicación", "Soporte operativo"],
