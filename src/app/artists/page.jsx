@@ -66,6 +66,17 @@ const ARTISTS = [
     ig: "https://instagram.com/arboledafx",
   },
   {
+    id: "pablo-vera",
+    name: "Pablo Vera",
+    roles: ["Fashion Stylist", "Creative Wardrobe Lead", "Imagen & Estética", "Dirección de Estilo", "Curaduría Visual"],
+    about:
+      "Estilista principal de Real Motion Cartel. Responsable de construir y pulir la identidad visual de los artistas a través del vestuario, referencias estéticas y coherencia de marca. Su criterio define los looks en sesiones, videoclips, presentaciones y campañas, garantizando una imagen sólida, moderna y estratégica para cada integrante de RMC.",
+    img: "/artists/pablovera.jpg",
+    ig: "https://instagram.com/arboledafx",
+  },
+
+
+  {
     id: "xini",
     name: "Xini",
     roles: ["Voz", "Compositor"],
