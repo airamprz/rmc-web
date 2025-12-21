@@ -12,9 +12,12 @@ const nav = [
   { href: "/", label: "Inicio" },
   { href: "/artists", label: "Artistas" },
   { href: "/news", label: "News" },
+  { href: "/drop", label: "Drop" }, // Late Again – private access
+  { href: "/merch", label: "Merch" },
   { href: "/shop", label: "Shop" },
   { href: "/reservar", label: "Servicios", locked: true },
 ];
+
 
 export default function Navbar() {
   const pathname = usePathname();
