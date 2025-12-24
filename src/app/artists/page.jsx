@@ -173,7 +173,7 @@ const ARTISTS = [
     about:
       "Joven promesa del reggaetón con una gran soltura vocal y un enfoque natural a la hora de interpretar. Su estilo combina melodías pegadizas, actitud fresca y sensibilidad urbana, logrando conectar con facilidad con el público. Destaca por su versatilidad, su capacidad para adaptarse a diferentes ritmos y una presencia artística en crecimiento que la posiciona como uno de los perfiles con mayor proyección dentro del nuevo panorama urbano.",
     img: "/artists/akaelperi.jpg",
-    ig: "https://instagram.com/akaelperi",
+    ig: "https://instagram.com/miguelmillanpp",
   },
 ];
 

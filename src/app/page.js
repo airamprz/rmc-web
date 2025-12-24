@@ -288,9 +288,9 @@ export default function HomePage() {
         <section
           id="featured-release"
           aria-labelledby="featured-release-title"
-          className="border-y border-white/10 bg-gradient-to-b from-white/5 via-black to-black"
+          className="border-y border-white/10 bg-gradient-to-b from-black via-black to-white/5"
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-12 grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center">
             {/* Texto */}
             <motion.div
               variants={fadeUp}
@@ -299,7 +299,7 @@ export default function HomePage() {
               viewport={{ once: true, amount: 0.4 }}
             >
               <p className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.09em] text-emerald-200">
-                Próximo single
+                Ya disponible
                 <span className="h-1 w-1 rounded-full bg-emerald-300" />
               </p>
 
@@ -312,42 +312,40 @@ export default function HomePage() {
               </h2>
 
               <p className="mt-4 text-sm sm:text-base text-zinc-300 max-w-xl leading-relaxed">
-                Adelanto exclusivo del próximo lanzamiento de RMC. Un perreo con
-                energía, ritmo y actitud donde 509flakko y BigFicre conectan con
-                un estilo fresco y pegajoso. Esta preview es solo una parte del
-                tema completo, disponible en plataformas el 23 de diciembre.
+                El nuevo single de Real Motion Cartel ya está fuera. Un tema directo,
+                nocturno y con actitud, donde 509flakko y BigFicre conectan sobre un
+                sonido crudo y callejero. Disponible en todas las plataformas.
               </p>
 
-              {/* Fecha de lanzamiento */}
+              {/* Plataformas */}
               <div className="mt-6 flex flex-wrap items-center gap-4">
-                <div className="rounded-2xl border border-white/15 bg-black/50 px-4 py-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-400">
-                    Lanzamiento
-                  </p>
-                  <p className="mt-1 text-base sm:text-lg font-semibold text-white">
-                    23 de diciembre de 2025
-                  </p>
-                </div>
+                <a
+                  href="https://open.spotify.com/intl-es/track/0rtp8A6fmCZS5RDy1SIzCr?si=130643d91e334915"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-xl border border-emerald-400/30 bg-emerald-400/15 px-5 py-3 text-sm font-semibold text-emerald-200 hover:bg-emerald-400/25 transition"
+                >
+                  Escuchar en Spotify
+                </a>
 
-                <Button href="#upcoming" variant="primary" size="sm">
-                  Ver más lanzamientos
-                </Button>
+                <a
+                  href="https://www.youtube.com/watch?v=lulGDouNy4A"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10 transition"
+                >
+                  Ver en YouTube
+                </a>
               </div>
 
-              {/* Audio preview */}
-              <div className="mt-7">
+              {/* Fecha */}
+              <div className="mt-8 rounded-2xl border border-white/15 bg-black/50 px-4 py-3 inline-block">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-400">
-                  Preview exclusivo
+                  Lanzado el
                 </p>
-                <div className="mt-2 max-w-md rounded-2xl border border-white/15 bg-black/60 px-3 py-3">
-                  <audio controls className="w-full">
-                    <source
-                      src="/audio/doble-f-una-noche-con-un-g-preview.wav"
-                      type="audio/wav"
-                    />
-                    Tu navegador no soporta el reproductor de audio.
-                  </audio>
-                </div>
+                <p className="mt-1 text-base sm:text-lg font-semibold text-white">
+                  23 de diciembre de 2025
+                </p>
               </div>
             </motion.div>
 
@@ -362,27 +360,26 @@ export default function HomePage() {
               <div className="relative aspect-[4/5]">
                 <Image
                   src="/covers/una-noche-con-un-g.jpg"
-                  alt="Portada del próximo single Una Noche Con Un G"
+                  alt="Portada del single Una Noche Con Un G"
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 80vw, 400px"
                 />
 
-                {/* Badge fecha */}
-                <div className="absolute top-3 right-3 rounded-2xl border border-white/25 bg-black/80 px-3 py-2 text-right backdrop-blur">
-                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-zinc-400">
-                    Sale
+                {/* Badge OUT NOW */}
+                <div className="absolute top-3 right-3 rounded-2xl border border-emerald-400/40 bg-black/80 px-3 py-2 text-right backdrop-blur">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-emerald-300">
+                    Out now
                   </p>
                   <p className="text-sm sm:text-base font-semibold text-white leading-tight">
-                    23 DIC
+                    Disponible
                   </p>
-                  <p className="text-[10px] text-zinc-400">2025</p>
                 </div>
 
                 {/* Faja inferior */}
                 <div className="absolute inset-x-3 bottom-3 rounded-2xl bg-black/75 backdrop-blur border border-white/15 px-3 py-2.5">
                   <p className="text-[11px] uppercase tracking-[0.16em] text-zinc-400">
-                    Próximo single
+                    Nuevo lanzamiento
                   </p>
                   <p className="mt-0.5 text-sm sm:text-base font-semibold text-white line-clamp-2">
                     Una Noche Con Un G — 509flakko ft BigFicre
