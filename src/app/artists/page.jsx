@@ -10,7 +10,7 @@ const ARTISTS = [
   {
     id: "509flakko",
     name: "509flakko",
-    roles: ["Founder & CEO", "Head of A&R", "Voz", "Compositor"],
+    roles: ["CEO", "Head of A&R", "Voz", "Compositor"],
     about:
       "Fundador y CEO de Real Motion Cartel. Líder estratégico y responsable de A&R, define la visión creativa, el desarrollo de artistas y la identidad global del sello. Como artista, destaca por un sonido influenciado por el trap de Detroit, con una estética cruda, experimental y profundamente personal que sirve como pilar sonoro del colectivo.",
     img: "/artists/flakko.jpg",
@@ -175,6 +175,16 @@ const ARTISTS = [
     img: "/artists/akaelperi.jpg",
     ig: "https://instagram.com/miguelmillanpp",
   },
+  {
+    id: "waitta38",
+    name: "Waitta38",
+    roles: ["Rapper", "Compositor"],
+    about:
+      "Criado en un barrio del sur de Madrid, este artista tiene una visión única del mundo urbano. A pesar de su carácter reservado, su música habla por él, abarcando desde drill y hoodtrap hasta trap romántico y sad/real rap. No se limita a un solo género, sino que fusiona estilos y sonidos que reflejan su vida, emociones y vivencias. Con un enfoque auténtico y sin filtros, está construyendo su camino en la escena urbana, buscando conectar con quienes comparten su visión del mundo.",
+    img: "/artists/0waitta38.jpg",
+    ig: "https://instagram.com/0waitta38",
+}
+
 ];
 
 

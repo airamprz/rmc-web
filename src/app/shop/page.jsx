@@ -22,13 +22,6 @@ const PRODUCTS = [
     img: "/products/cinturongucci.jpg",
     paymentLink: "https://buy.stripe.com/fZu5kFdf8aMG0Zs92x5os01",
   },
-  {
-    id: "bolso-lv",
-    name: "Bolso LV",
-    price: 55,
-    img: "/products/bolsolv.jpg",
-    paymentLink: "https://buy.stripe.com/aFabJ3fng1c68rUemR5os00",
-  },
 ];
 
 /* ---------- Variants reutilizables ---------- */
