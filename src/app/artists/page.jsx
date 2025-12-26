@@ -10,7 +10,7 @@ const ARTISTS = [
   {
     id: "509flakko",
     name: "509flakko",
-    roles: ["CEO", "Head of A&R", "Voz", "Compositor"],
+    roles: ["CEO", "Head of A&R", "Voz", "Compositor", "Productor"],
     about:
       "Fundador y CEO de Real Motion Cartel. Líder estratégico y responsable de A&R, define la visión creativa, el desarrollo de artistas y la identidad global del sello. Como artista, destaca por un sonido influenciado por el trap de Detroit, con una estética cruda, experimental y profundamente personal que sirve como pilar sonoro del colectivo.",
     img: "/artists/flakko.jpg",
