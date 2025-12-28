@@ -1,7 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
-module.exports = {
+const config = {
   siteUrl: 'https://realmotioncartel.com',
   generateRobotsTxt: true,
-  changefreq: 'weekly',
-  priority: 0.7,
-}
+};
+
+export default config;
