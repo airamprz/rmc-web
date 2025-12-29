@@ -112,7 +112,7 @@ export default function HomePage() {
               >
                 <Image
                   src="/logo.png"
-                  alt="RMC Logo"
+                  alt="RMC — Real Motion Cartel"
                   fill
                   className="object-contain"
                   priority
@@ -128,7 +128,7 @@ export default function HomePage() {
               whileInView="show"
               viewport={{ once: true }}
             >
-              Real Motion Cartel — Música, visuales y cultura desde Madrid
+              Real Motion Cartel — Sello musical y colectivo creativo en Madrid
             </motion.h1>
 
             <motion.p
@@ -138,8 +138,8 @@ export default function HomePage() {
               whileInView="show"
               transition={{ delay: 0.18 }}
             >
-              Lanzamientos con identidad: concepto, sonido y estética. Menos
-              ruido, más idea.
+              Música urbana contemporánea con identidad underground. Lanzamientos
+              con control creativo: sonido, estética y narrativa.
             </motion.p>
           </div>
         </section>
@@ -157,15 +157,15 @@ export default function HomePage() {
                 id="about-title"
                 className="text-2xl sm:text-3xl font-extrabold text-white"
               >
-                Quiénes somos
+                Qué es RMC
               </h2>
               <p className="mt-4 text-zinc-300 leading-relaxed text-sm sm:text-base">
-                Real Motion Cartel (RMC) es un colectivo creativo con base en
-                Madrid que une música, moda y producción audiovisual. Diseñamos
-                proyectos completos, desde la idea hasta el lanzamiento:
-                dirección artística, sonido, visuales y estrategia digital.
-                Trabajamos con artistas y marcas que buscan una identidad clara,
-                coherente y con impacto real.
+                Real Motion Cartel (RMC) es un sello musical y colectivo creativo
+                con base en Madrid. Desarrollamos talento y publicamos
+                lanzamientos con una dirección clara: identidad por encima de
+                tendencia, coherencia por encima de ruido. Cada proyecto se
+                construye desde el sonido hasta su ejecución visual, con control
+                narrativo y estética consistente.
               </p>
             </motion.div>
 
@@ -177,13 +177,13 @@ export default function HomePage() {
               whileInView="show"
             >
               <p className="relative text-zinc-400 text-xs sm:text-sm">
-                Visual reel próximamente
+                Reel visual en preparación
               </p>
             </motion.div>
           </div>
         </section>
 
-        {/* CONCEPTO / QUÉ HACEMOS / VISIÓN */}
+        {/* CAPACIDADES / VISIÓN / FILOSOFÍA */}
         <section className="border-t border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-10">
             <motion.div
@@ -193,14 +193,12 @@ export default function HomePage() {
               viewport={{ once: true, amount: 0.3 }}
             >
               <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold">
-                🧩 Concepto general
+                Dirección
               </h2>
               <p className="mt-4 text-zinc-300 leading-relaxed max-w-4xl text-sm sm:text-base">
-                Real Motion Cartel integra música, moda y producción audiovisual
-                bajo una misma dirección creativa. El objetivo es construir una
-                plataforma donde artistas y proyectos crezcan con una identidad
-                sólida: desde el sonido y la imagen hasta la narrativa visual y
-                su presencia digital.
+                RMC funciona como un ecosistema. Artistas, sonido y visuales bajo
+                una misma línea. No buscamos agradar a todos: buscamos imponer
+                identidad, construir respeto y consolidar un catálogo con peso.
               </p>
             </motion.div>
 
@@ -213,7 +211,7 @@ export default function HomePage() {
                 whileInView="show"
                 viewport={{ once: true, amount: 0.3 }}
               >
-                ⚡ Qué hacemos
+                Qué hacemos
               </motion.h2>
 
               <ClientOnly>
@@ -225,20 +223,24 @@ export default function HomePage() {
                 >
                   {[
                     {
-                      title: "Música",
-                      desc: "Dirección creativa, grabación, mezcla/master, visualizers y lanzamiento.",
+                      title: "Lanzamientos",
+                      desc: "Singles, EPs y proyectos con planificación real: timing, assets y ejecución.",
+                    },
+                    {
+                      title: "Desarrollo artístico",
+                      desc: "Dirección creativa y acompañamiento: identidad, posicionamiento y narrativa.",
                     },
                     {
                       title: "Visuales",
-                      desc: "Videoclips, sesiones de fotos y contenido para redes con enfoque cinematográfico.",
+                      desc: "Portadas, visualizers y contenido: estética fría, dominante y coherente.",
                     },
                     {
-                      title: "Moda",
-                      desc: "Líneas propias (RMC Wear) y selección importada (RMC Select) con criterio estético.",
+                      title: "Merch",
+                      desc: "Drops selectos vinculados a la identidad del sello, sin saturar ni quemar marca.",
                     },
                     {
-                      title: "Branding & Web",
-                      desc: "Identidad visual, diseño web y estrategia digital para artistas y marcas.",
+                      title: "RMC Select",
+                      desc: "Curación de ropa de marca y piezas seleccionadas. Drops limitados como extensión del universo RMC.",
                     },
                   ].map((b) => (
                     <motion.div
@@ -257,14 +259,14 @@ export default function HomePage() {
             {/* VISIÓN Y FILOSOFÍA */}
             {[
               {
-                title: "🚀 Visión a futuro",
+                title: "Visión",
                 text:
-                  "RMC evolucionará hacia un sello independiente con estructura propia de distribución, desarrollo de talento y producción creativa. El objetivo es consolidar un ecosistema donde artistas, realizadores y marcas colaboren de forma orgánica, con lanzamientos, eventos y una comunidad activa alrededor del proyecto.",
+                  "Construir un sello reconocible por su coherencia, control narrativo y credibilidad artística. Crecimiento sostenido, sin depender de tendencias ni sobreexposición.",
               },
               {
-                title: "💡 Filosofía",
+                title: "Filosofía",
                 text:
-                  "Movimiento real, sin postureo. RMC combina profesionalismo y calle: estética cuidada, estrategia clara y resultados medibles. Cada pieza —tema, vídeo, campaña o drop— tiene una intención concreto y forma parte de un universo visual y sonoro reconocible.",
+                  "Silencio estratégico, ejecución precisa. Cada lanzamiento refuerza el universo RMC: identidad por encima del algoritmo, largo plazo por encima del impacto inmediato.",
               },
             ].map((block) => (
               <motion.div
@@ -312,9 +314,8 @@ export default function HomePage() {
               </h2>
 
               <p className="mt-4 text-sm sm:text-base text-zinc-300 max-w-xl leading-relaxed">
-                El nuevo single de Real Motion Cartel ya está fuera. Un tema directo,
-                nocturno y con actitud, donde 509flakko y BigFicre conectan sobre un
-                sonido crudo y callejero. Disponible en todas las plataformas.
+                Nuevo lanzamiento de Real Motion Cartel. Directo, nocturno y con
+                intención. Disponible en todas las plataformas.
               </p>
 
               {/* Plataformas */}
@@ -379,7 +380,7 @@ export default function HomePage() {
                 {/* Faja inferior */}
                 <div className="absolute inset-x-3 bottom-3 rounded-2xl bg-black/75 backdrop-blur border border-white/15 px-3 py-2.5">
                   <p className="text-[11px] uppercase tracking-[0.16em] text-zinc-400">
-                    Nuevo lanzamiento
+                    Lanzamiento destacado
                   </p>
                   <p className="mt-0.5 text-sm sm:text-base font-semibold text-white line-clamp-2">
                     Una Noche Con Un G — 509flakko ft BigFicre
@@ -412,13 +413,28 @@ export default function HomePage() {
                 {[
                   {
                     tag: "Single",
+                    title: "BG01 - NONSTOPPA FT WAITTA38",
+                    yt: "https://www.youtube-nocookie.com/embed/w5JnEZxQz_s?si=isr4yn8GxzTmrMfA",
+                  },
+                  {
+                    tag: "Single",
+                    title: "Una Noche Con Un G — 509flakko ft BigFicre",
+                    yt: "https://www.youtube.com/embed/lulGDouNy4A?si=uvTWBqWt4d-7uf4O",
+                  },
+                  {
+                    tag: "Single",
                     title: "BG01 - GHETTO",
                     yt: "https://www.youtube.com/embed/n_Pfo3FcPyY?si=riXLOTFuXRUPpREh",
                   },
                   {
-                    tag: "Nuevo",
+                    tag: "Single",
                     title: "Star Feeling — Sheyla Langa (feat. Bravo Steez)",
                     yt: "https://www.youtube.com/embed/Jv3VSEAOSBY",
+                  },
+                  {
+                    tag: "Single",
+                    title: "Star Haze - Watta Like ft. Sheyla Langa (prod. Bravo Steez)",
+                    yt: "https://www.youtube.com/embed/PxN6LkhLI2w?si=hYu2h9OkQlZaDNAd",
                   },
                   {
                     tag: "Single",
@@ -436,8 +452,7 @@ export default function HomePage() {
                   },
                   {
                     tag: "Colaboración",
-                    title:
-                      "BIG FICRE — GAS O MEDICINA (FT. BIG BOLER, DM850)",
+                    title: "BIG FICRE — GAS O MEDICINA (FT. BIG BOLER, DM850)",
                     yt: "https://www.youtube.com/embed/18bELdfb6HU",
                   },
                   {
@@ -530,7 +545,7 @@ export default function HomePage() {
                     <div className="relative aspect-[4/5] overflow-hidden">
                       <Image
                         src={item.cover}
-                        alt={item.title}
+                        alt={`Portada: ${item.title}`}
                         fill
                         className="object-cover transition-transform group-hover:scale-105"
                       />
@@ -557,4 +572,3 @@ export default function HomePage() {
     </>
   );
 }
-
