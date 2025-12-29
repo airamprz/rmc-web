@@ -22,6 +22,8 @@ const posts = [
     date: "2025-12-29",
     tag: "Releases",
     cover: RELEASES_COVER,
+    // ✅ Marcamos esta como “hero” para usar formato editorial (16:9)
+    coverVariant: "wide",
     excerpt:
       "RMC activa la sección Releases dentro de su web oficial: un archivo vivo del catálogo, diseñado para centralizar lanzamientos, reforzar la narrativa y ordenar la etapa actual del sello.",
     body: () => (
@@ -214,23 +216,30 @@ function formatDateShortES(dateStr) {
 }
 
 function PostCard({ post }) {
-  const formattedDate = useMemo(
-    () => formatDateShortES(post.date),
-    [post.date]
-  );
+  const formattedDate = useMemo(() => formatDateShortES(post.date), [post.date]);
+
+  // ✅ Si la imagen es “wide”, usamos 16:9. Si no, 1:1.
+  const isWide = post.coverVariant === "wide";
+  const coverClass = isWide ? "aspect-[16/9]" : "aspect-square";
 
   return (
     <article className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/5 via-white/[0.03] to-black/80 shadow-xl shadow-black/40">
-      {/* Cover */}
       {post.cover ? (
-        <div className="relative w-full aspect-square">
+        <div className={`relative w-full ${coverClass}`}>
           <Image
             src={post.cover}
             alt={post.title}
             fill
             className="object-cover"
             priority={post.id === "rmc-releases-launch"}
-            sizes="(min-width: 1024px) 896px, (min-width: 640px) 100vw, 100vw"
+            sizes={
+              isWide
+                ? "(min-width: 1024px) 896px, (min-width: 640px) 100vw, 100vw"
+                : "(min-width: 1024px) 896px, (min-width: 640px) 100vw, 100vw"
+            }
+            // ✅ Evita recomprimir demasiado. (Aun así, si el archivo es “banner”
+            // y lo fuerzas a cuadrado, se verá peor. Por eso hacemos 16:9 arriba.)
+            quality={95}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
@@ -262,7 +271,6 @@ function PostCard({ post }) {
         </div>
       )}
 
-      {/* Content */}
       <div className="p-5 sm:p-7 space-y-4">
         <header>
           <p className="text-xs uppercase tracking-[0.2em] text-zinc-400">
