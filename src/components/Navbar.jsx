@@ -10,7 +10,9 @@ import { HiLockClosed } from "react-icons/hi2";
 
 const nav = [
   { href: "/", label: "Inicio" },
+  { href: "/about", label: "About" },      // Qué es RMC (sin sobreexplicar)
   { href: "/artists", label: "Artistas" },
+  { href: "/releases", label: "Releases" },
   { href: "/news", label: "News" },
   { href: "/drop", label: "Drop" }, // Late Again – private access
   { href: "/merch", label: "Merch" },

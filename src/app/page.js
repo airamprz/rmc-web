@@ -423,13 +423,18 @@ export default function HomePage() {
                   },
                   {
                     tag: "Single",
-                    title: "BG01 - GHETTO",
-                    yt: "https://www.youtube.com/embed/n_Pfo3FcPyY?si=riXLOTFuXRUPpREh",
+                    title: "Star Feeling — Sheyla Langa (feat. Bravo Steez)",
+                    yt: "https://www.youtube.com/embed/Jv3VSEAOSBY",
                   },
                   {
                     tag: "Single",
-                    title: "Star Feeling — Sheyla Langa (feat. Bravo Steez)",
-                    yt: "https://www.youtube.com/embed/Jv3VSEAOSBY",
+                    title: "NO ME CONOCE - PERI X CODE X SORIA",
+                    yt: "https://www.youtube.com/embed/68o7eChhOpU?si=PzpIHPYs4wKaMOvL",
+                  },
+                  {
+                    tag: "Single",
+                    title: "BG01 - GHETTO",
+                    yt: "https://www.youtube.com/embed/n_Pfo3FcPyY?si=riXLOTFuXRUPpREh",
                   },
                   {
                     tag: "Single",
