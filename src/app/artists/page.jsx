@@ -1,5 +1,8 @@
 "use client";
-import { useState } from "react";
+
+import Link from "next/link";
+import Script from "next/script";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -12,204 +15,273 @@ const ARTISTS = [
     name: "509flakko",
     roles: ["CEO", "Head of A&R", "Voz", "Compositor", "Productor"],
     about:
-      "Fundador y CEO de Real Motion Cartel. Líder estratégico y responsable de A&R, define la visión creativa, el desarrollo de artistas y la identidad global del sello. Como artista, destaca por un sonido influenciado por el trap de Detroit, con una estética cruda, experimental y profundamente personal que sirve como pilar sonoro del colectivo.",
+      "CEO de Real Motion Cartel. Lidera la visión creativa, el desarrollo artístico y la identidad global del sello. Sonido influenciado por el trap de Detroit: crudo, experimental y personal.",
     img: "/artists/flakko.jpg",
-    ig: "https://instagram.com/509flakko",
+    ig: "https://www.instagram.com/509flakko",
   },
   {
     id: "big-ficre",
     name: "Big Ficre",
-    roles: ["COO", "Mano derecha del CEO", "Voz", "Compositor"],
+    roles: ["COO", "Operaciones", "Voz", "Compositor"],
     about:
-      "Chief Operating Officer y mano derecha del CEO en RMC. Supervisa la ejecución operativa del sello y participa en la toma de decisiones clave, asegurando que cada proyecto avance con coherencia y dirección. Como artista, aporta una energía agresiva y dominante que refuerza la identidad del colectivo.",
+      "Chief Operating Officer en RMC. Supervisa la ejecución operativa y decisiones clave para sostener coherencia y dirección. Como artista aporta energía agresiva y dominante.",
     img: "/artists/big-ficre.jpg",
-    ig: "https://instagram.com/bigficre",
+    ig: "https://www.instagram.com/bigficre",
   },
   {
     id: "fernando-morales",
     name: "Fernando Morales",
     roles: ["Operations & Strategy Manager", "Administración", "Dirección de proyectos"],
     about:
-      "Responsable de operaciones y estrategia en RMC. Supervisa la ejecución de proyectos, organiza la estructura interna del sello y apoya la toma de decisiones clave junto al CEO y el COO. Garantiza que cada movimiento del colectivo avance con coherencia, planificación y dirección profesional.",
+      "Responsable de operaciones y estrategia. Ordena la ejecución de proyectos, estructura interna y soporte a decisiones junto a dirección ejecutiva.",
     img: "/artists/fer.jpg",
-    ig: "https://instagram.com/fermoralesp6",
+    ig: "https://www.instagram.com/fermoralesp6",
   },
   {
     id: "yaiza-deniz",
     name: "Yaiza Deniz",
-    roles: ["Directora creativa"],
+    roles: ["Dirección creativa", "Identidad visual", "Concepto"],
     about:
-      "Responsable de construir y supervisar la identidad visual de RMC. Define la estética del sello, lidera las propuestas conceptuales, coordina sesiones creativas y garantiza que la imagen del colectivo mantenga coherencia, fuerza y reconocimiento.",
+      "Define y supervisa la identidad visual de RMC. Lidera propuestas conceptuales y asegura coherencia estética en campañas, sesiones y piezas.",
     img: "/artists/yaiza.jpg",
-    ig: "https://instagram.com/ydenizmed",
+    ig: "https://www.instagram.com/ydenizmed",
   },
   {
     id: "monru",
     name: "Monru",
-    roles: [
-      "Operations Coordinator",
-      "Talent Support",
-      "Estrategia & Organización"
-    ],
+    roles: ["Operations Coordinator", "Talent Support", "Estrategia & Organización"],
     about:
-      "Coordinador de operaciones en RMC, con un rol clave en la organización interna, la gestión del roster y el soporte estratégico del sello. Aporta estructura, seguimiento y coherencia a los proyectos, coordinando agendas, sesiones y lanzamientos, y asegurando que cada artista cuente con el apoyo necesario para avanzar. Con buena presencia y capacidad para liderar, participa en la relación directa con el roster y colabora en labores de scouting, aportando criterio, orden y visión en la expansión del colectivo.",
+      "Coordinación operativa y soporte estratégico. Gestión interna, seguimiento de roster y coordinación de agendas, sesiones y lanzamientos.",
     img: "/artists/monru.jpg",
-    ig: "https://instagram.com/monru" // cámbialo si procede
+    ig: "https://www.instagram.com/monru",
   },
   {
     id: "yoel-arboleda",
     name: "Yoel Arboleda",
-    roles: ["Finance & Operations Coordinator", "Gestión", "Atención al cliente", "Comunicación", "Soporte operativo"],
+    roles: ["Finance & Operations Coordinator", "Gestión", "Soporte operativo"],
     about:
-      "Coordinador de finanzas y operaciones en RMC. Gestiona la comunicación con clientes y artistas, organiza la operativa diaria y brinda soporte administrativo y logístico. Su labor garantiza que cada proyecto fluya con calidad, eficiencia y profesionalidad.",
+      "Coordinación de finanzas y operaciones. Comunicación, soporte administrativo y logística para que cada proyecto avance con eficiencia.",
     img: "/artists/arboleda.jpg",
-    ig: "https://instagram.com/arboledafx",
+    ig: "https://www.instagram.com/arboledafx",
   },
   {
     id: "pablo-vera",
     name: "Pablo Vera",
-    roles: ["Fashion Stylist", "Creative Wardrobe Lead", "Imagen & Estética", "Dirección de Estilo", "Curaduría Visual"],
+    roles: ["Fashion Stylist", "Creative Wardrobe Lead", "Dirección de estilo"],
     about:
-      "Estilista principal de Real Motion Cartel. Responsable de construir y pulir la identidad visual de los artistas a través del vestuario, referencias estéticas y coherencia de marca. Su criterio define los looks en sesiones, videoclips, presentaciones y campañas, garantizando una imagen sólida, moderna y estratégica para cada integrante de RMC.",
+      "Estilista principal de RMC. Construye identidad visual a través de vestuario y curaduría estética. Define looks para sesiones, videoclips y campañas.",
     img: "/artists/pablovera.jpg",
-    ig: "https://instagram.com/arboledafx",
+    ig: "https://www.instagram.com/pablovra_", 
   },
 
-
+  // Artistas
   {
     id: "xini",
     name: "Xini",
     roles: ["Voz", "Compositor"],
     about:
-      "Artista que mezcla trap con melodías de corte más introspectivo. Su enfoque experimental y su capacidad para crear atmósferas propias aportan una dimensión emocional y distintiva dentro del roster de RMC.",
+      "Trap con enfoque introspectivo. Capacidad para construir atmósferas propias y una dimensión emocional distintiva en el roster.",
     img: "/artists/xini.jpg",
-    ig: "https://instagram.com/xini509",
+    ig: "https://www.instagram.com/xini509",
   },
   {
     id: "young-cmon",
     name: "Young Cmon",
     roles: ["Voz", "Compositor"],
     about:
-      "Artista con un sonido brillante, mainstream y experimental. Su enfoque melódico y su capacidad para conectar con el público lo convierten en una de las voces más versátiles y con mayor proyección dentro del colectivo RMC.",
+      "Sonido brillante y melódico con enfoque mainstream y experimental. Versatilidad y proyección dentro del universo RMC.",
     img: "/artists/young.jpg",
-    ig: "https://instagram.com/young.cmon",
+    ig: "https://www.instagram.com/young.cmon",
   },
   {
     id: "elsevi09",
     name: "ElSevi09",
     roles: ["Voz", "Compositor"],
     about:
-      "Artista con un sonido callejero y auténtico. Su estilo directo y sus letras reflejan vivencias reales, aportando crudeza, carácter y honestidad al sonido del colectivo RMC.",
+      "Sonido callejero y directo. Letras de vivencia real y carácter crudo que refuerza el perfil urbano del colectivo.",
     img: "/artists/elsevi.jpg",
-    ig: "https://instagram.com/elseviii09",
+    ig: "https://www.instagram.com/elseviii09",
   },
   {
     id: "sheila",
     name: "Sheila Langa",
     roles: ["Voz", "Compositora"],
     about:
-      "Artista con una voz cálida y una presencia natural. Aporta un enfoque melódico y emocional al colectivo RMC, destacando por su autenticidad y su capacidad de conectar con el público.",
+      "Voz cálida y presencia natural. Enfoque melódico y emocional con autenticidad y conexión directa.",
     img: "/artists/sheila1.jpg",
-    ig: "https://instagram.com/sheilalanga_",
+    ig: "https://www.instagram.com/sheilalanga_",
   },
   {
     id: "darlyn-sirii",
     name: "Darlyn Sirii",
     roles: ["Voz", "Compositor"],
     about:
-      "Artista urbano dominicano afincado en Madrid. Su propuesta mezcla trap, reggaetón y hip hop melódico, con letras personales y callejeras. Con el álbum “Sentimientos En El Trap” y singles como “No Cantan”, “Bandida” o “Mi Ex”, consolida un sonido propio dentro de la escena y aporta diversidad al universo RMC.",
+      "Artista dominicano afincado en Madrid. Mezcla trap, reggaetón y hip hop melódico con letras personales y callejeras.",
     img: "/artists/darlyn.jpg",
-    ig: "https://instagram.com/darlynsirii",
+    ig: "https://www.instagram.com/darlynsirii",
   },
   {
     id: "cb-one",
     name: "CB ONE",
     roles: ["Voz", "Compositor"],
     about:
-      "Artista urbano emergente cuya música combina rap moderno e influencias melódicas, destacando por un sonido atmosférico y letras sinceras. Su crecimiento en plataformas digitales refleja una propuesta sólida y en constante evolución dentro de la escena independiente.",
+      "Rap moderno con influencias melódicas. Sonido atmosférico y letras sinceras, en evolución dentro de la escena independiente.",
     img: "/artists/cbone.jpg",
-    ig: "https://www.instagram.com/cb.one1/",
+    ig: "https://www.instagram.com/cb.one1",
   },
   {
-    id: "BG01",
+    id: "bg01",
     name: "BG01",
     roles: ["Voz", "Compositor"],
     about:
-      "Artista urbano emergente que fusiona rap moderno e influencias melódicas. Su sonido envolvente y su propuesta honesta lo consolidan como un perfil con gran potencial dentro de la nueva ola independiente.",
+      "Fusión de rap moderno e influencias melódicas. Sonido envolvente y propuesta honesta dentro de la nueva ola independiente.",
     img: "/artists/bgone.jpg",
-    ig: "https://www.instagram.com/bg_one018/",
+    ig: "https://www.instagram.com/bg_one018",
   },
   {
     id: "649babywhite",
     name: "649babywhite",
     roles: ["Voz", "Rapero", "Compositor"],
     about:
-      "Rapero de estética underground con un sonido claramente influenciado por la escuela de Detroit. Su estilo destaca por flows cortantes, patrones frenéticos y una energía cruda que recuerda a la nueva ola del midwest, posicionándolo como uno de los perfiles más distintivos dentro del universo RMC.",
+      "Estética underground con influencia Detroit. Flows cortantes, patrones frenéticos y energía cruda del midwest.",
     img: "/artists/babywhite.jpg",
-    ig: "https://instagram.com/649babywhite",
+    ig: "https://www.instagram.com/649babywhite",
   },
   {
     id: "nico-arrocha",
     name: "Nico Arrocha",
     roles: ["Voz", "Compositor"],
     about:
-      "Artista canario en ascenso cuyo sonido fusiona raíces locales con una estética contemporánea y mainstream. Su versatilidad le permite moverse entre el rap, el urbano melódico y otros estilos modernos, manteniendo siempre un sello propio influenciado por la identidad musical de Canarias.",
+      "Artista canario en ascenso. Fusión de raíces locales con estética contemporánea y mainstream, manteniendo sello propio.",
     img: "/artists/nicoarrocha.jpg",
-    ig: "https://instagram.com/nicoarrocha.fr",
+    ig: "https://www.instagram.com/nicoarrocha.fr",
   },
   {
     id: "julian-marrero",
     name: "Julián Marrero",
     roles: ["DJ"],
     about:
-      "DJ de Lanzarote reconocido por su presencia sólida en la escena musical de la isla. Centrado principalmente en la electrónica y la música urbana, destaca por una selección versátil, mezclas fluidas y un enfoque orientado al directo, encajando de forma natural en ambientes de club y eventos urbanos.",
+      "DJ de Lanzarote. Selección versátil y enfoque orientado al directo entre electrónica y urbano.",
     img: "/artists/julian.jpg",
-    ig: "https://instagram.com/julian_marrero",
+    ig: "https://www.instagram.com/julian_marrero",
   },
   {
     id: "akaelperi",
     name: "AKAELPERI",
     roles: ["Voz", "Cantante", "Compositora"],
     about:
-      "Joven promesa del reggaetón con una gran soltura vocal y un enfoque natural a la hora de interpretar. Su estilo combina melodías pegadizas, actitud fresca y sensibilidad urbana, logrando conectar con facilidad con el público. Destaca por su versatilidad, su capacidad para adaptarse a diferentes ritmos y una presencia artística en crecimiento que la posiciona como uno de los perfiles con mayor proyección dentro del nuevo panorama urbano.",
+      "Perfil emergente de reggaetón con soltura vocal, melodías pegadizas y sensibilidad urbana. Versátil y en crecimiento.",
     img: "/artists/akaelperi.jpg",
-    ig: "https://instagram.com/miguelmillanpp",
+    ig: "https://www.instagram.com/miguelmillanpp",
   },
   {
     id: "waitta38",
     name: "Waitta38",
     roles: ["Rapper", "Compositor"],
     about:
-      "Criado en un barrio del sur de Madrid, este artista tiene una visión única del mundo urbano. A pesar de su carácter reservado, su música habla por él, abarcando desde drill y hoodtrap hasta trap romántico y sad/real rap. No se limita a un solo género, sino que fusiona estilos y sonidos que reflejan su vida, emociones y vivencias. Con un enfoque auténtico y sin filtros, está construyendo su camino en la escena urbana, buscando conectar con quienes comparten su visión del mundo.",
+      "Criado en el sur de Madrid. Sonido reservado pero directo: drill, hoodtrap, trap romántico y sad/real rap con enfoque auténtico.",
     img: "/artists/0waitta38.jpg",
-    ig: "https://instagram.com/0waitta38",
-}
-
+    ig: "https://www.instagram.com/0waitta38",
+  },
 ];
-
 
 /* ---------- Página ---------- */
 export default function ArtistsPage() {
+  // JSON-LD: roster como ItemList (estructura clara para Google/IA)
+  const jsonLd = useMemo(() => {
+    const items = ARTISTS.map((a, i) => ({
+      "@type": "Person",
+      position: i + 1,
+      name: a.name,
+      url: a.ig || `https://realmotioncartel.com/artists#${a.id}`,
+      image: a.img ? `https://realmotioncartel.com${a.img}` : undefined,
+      description: a.about,
+    }));
+
+    return {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          name: "Real Motion Cartel",
+          alternateName: "RMC",
+          url: "https://realmotioncartel.com",
+          logo: "https://realmotioncartel.com/logo.png",
+          image: "https://realmotioncartel.com/og-image.png",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Madrid",
+            addressCountry: "ES",
+          },
+        },
+        {
+          "@type": "ItemList",
+          name: "Artistas del sello — Real Motion Cartel",
+          itemListOrder: "http://schema.org/ItemListOrderAscending",
+          numberOfItems: ARTISTS.length,
+          itemListElement: items,
+        },
+      ],
+    };
+  }, []);
+
   return (
     <>
       <Navbar />
 
+      <Script
+        id="rmc-artists-jsonld"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <main className="bg-black text-white pt-24 pb-16 px-4 sm:px-6">
         <section className="mx-auto max-w-7xl">
-          {/* Header con fade */}
-          <motion.div
+          {/* Header */}
+          <motion.header
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             className="mb-10 text-center"
           >
+            {/* ✅ H1 único con intención SEO */}
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-              Artistas RMC
+              Artistas del sello — Real Motion Cartel
             </h1>
+
+            {/* Copy semántico, corto, específico */}
             <p className="text-zinc-400 mt-3 max-w-2xl mx-auto text-sm sm:text-base">
-              Voces y talentos del colectivo. Música diversa con identidad real.
+              Roster oficial y equipo creativo. Música urbana contemporánea (trap,
+              Detroit trap y reggaetón moderno/alternativo), con base en Madrid y
+              conexión Canarias.
             </p>
-          </motion.div>
+
+            {/* ✅ Internal links */}
+            <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <Link
+                href="/releases"
+                className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10 transition"
+              >
+                Ver catálogo (Releases)
+              </Link>
+              <Link
+                href="/news"
+                className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10 transition"
+              >
+                Comunicados (News)
+              </Link>
+              <Link
+                href="/about"
+                className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10 transition"
+              >
+                Sobre RMC (About)
+              </Link>
+            </div>
+          </motion.header>
+
+          {/* ✅ H2 útil para estructura (sin competir con H1) */}
+          <h2 className="sr-only">Roster y equipo de Real Motion Cartel</h2>
 
           {/* Grid animado */}
           <motion.div
@@ -228,11 +300,21 @@ export default function ArtistsPage() {
                   hidden: { opacity: 0, y: 12 },
                   show: { opacity: 1, y: 0, transition: { duration: 0.3 } },
                 }}
+                id={a.id}
               >
                 <ArtistCard artist={a} />
               </motion.div>
             ))}
           </motion.div>
+
+          {/* Footer note corto (SEO/credibilidad) */}
+          <p className="mt-10 text-xs sm:text-sm text-zinc-400 max-w-3xl">
+            Para prensa y verificación de roster/catálogo:{" "}
+            <span className="text-white/90 font-semibold">
+              info@realmotioncartel.com
+            </span>
+            .
+          </p>
         </section>
       </main>
 
@@ -245,15 +327,17 @@ export default function ArtistsPage() {
 function ArtistCard({ artist }) {
   const { name, roles, about, img, ig } = artist;
   const [imgError, setImgError] = useState(false);
-  const Wrapper = ig ? "a" : "div";
-  const wrapperProps = ig
+
+  const isLink = typeof ig === "string" && ig.trim().length > 0;
+  const Wrapper = isLink ? "a" : "div";
+  const wrapperProps = isLink
     ? {
-      href: ig,
-      target: "_blank",
-      rel: "noreferrer",
-      title: `${name} en Instagram`,
-      "aria-label": `${name} — abrir Instagram`,
-    }
+        href: ig,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        title: `${name} en Instagram`,
+        "aria-label": `${name} — abrir Instagram`,
+      }
     : {};
 
   return (
@@ -277,13 +361,13 @@ function ArtistCard({ artist }) {
           />
         )}
 
-        {/* Faja con nombre y roles */}
+        {/* Faja */}
         <div className="absolute bottom-2 left-2 right-2 rounded-xl bg-black/55 backdrop-blur border border-white/10 px-3 py-2">
           <h3 className="font-semibold leading-none">{name}</h3>
           <div className="mt-1 flex flex-wrap gap-1.5">
             {roles.map((r) => (
               <span
-                key={r}
+                key={`${name}-${r}`}
                 className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-2 py-0.5 text-[11px] text-zinc-200"
               >
                 {r}

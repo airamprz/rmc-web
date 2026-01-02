@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
+import Script from "next/script";
+import Link from "next/link";
 import { motion, MotionConfig, useReducedMotion } from "framer-motion";
 
 import Navbar from "@/components/Navbar";
@@ -12,11 +14,9 @@ import Button from "@/components/Button";
 function ClientOnly({ children }) {
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
+  useEffect(() => setMounted(true), []);
   if (!mounted) return null;
+
   return <>{children}</>;
 }
 
@@ -77,12 +77,15 @@ function cleanUrl(url) {
   if (!url) return "";
   try {
     const u = new URL(url);
+
     // elimina radio/playlist params típicos
     const remove = new Set(["list", "start_radio", "si", "index", "pp"]);
     for (const key of remove) u.searchParams.delete(key);
-    // deja solo los params que no estén en la lista (por si en el futuro metes uno necesario)
+
+    // reconstruye (mantiene otros params si existieran)
     const kept = new URL(u.origin + u.pathname);
     for (const [k, v] of u.searchParams.entries()) kept.searchParams.set(k, v);
+
     return kept.toString();
   } catch {
     return url;
@@ -117,8 +120,36 @@ function toYouTubeEmbed(url) {
   }
 }
 
+function isISODateYYYYMMDD(dateStr) {
+  return typeof dateStr === "string" && /^\d{4}-\d{2}-\d{2}$/.test(dateStr);
+}
+
+function normalizeForSort(dateStr) {
+  if (!dateStr) return "1970-01-01";
+  if (/^\d{4}$/.test(dateStr)) return `${dateStr}-01-01`;
+  return dateStr;
+}
+
+function splitArtists(raw) {
+  return String(raw || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
 /* ---------- DATA ---------- */
 const RELEASES = [
+  {
+    id: "esmayao",
+    type: "Single",
+    artist: "Flakko, BigFicre (ft Shynelevell)",
+    title: "Esmayao (ft. Shynelevell)",
+    date: "2025-12-30",
+    cover: "/covers/esmayao.jpg",
+    spotify: "https://open.spotify.com/track/5vEb7CtvVXV0vsH9EU0Oy8",
+    youtube: "https://www.youtube.com/watch?v=M-mUkITqYkQ",
+    colab: true,
+  },
   {
     id: "rmc-2025-una-noche-con-un-g",
     type: "Single",
@@ -182,21 +213,11 @@ const RELEASES = [
 
   /* --- Próximos --- */
   {
-    id: "esmayao",
-    type: "Single",
-    artist: "Flakko, BigFicre (ft Shynelevell)",
-    title: "Esmayao (ft. Shynelevell)",
-    date: "2025-12-30",
-    cover: "/covers/esmayao.jpg",
-    status: "Próximamente",
-    colab: true,
-  },
-  {
     id: "junkie-setup-ep",
     type: "EP",
     artist: "Flakko",
     title: "JUNKIE SETUP EP (ft. Shynelevell)",
-    date: "2026",
+    date: "2026", // año: NO se usa datePublished en JSON-LD
     cover: "/covers/JUNKIESETUP.jpg",
     status: "Próximamente",
     colab: true,
@@ -211,21 +232,23 @@ export default function ReleasesPage() {
 
   const filters = useMemo(() => ["All", "Single", "EP", "Colab"], []);
 
-  const releases = useMemo(() => {
-    const sorted = [...RELEASES].sort((a, b) => {
-      const da = new Date(/^\d{4}$/.test(a.date || "") ? `${a.date}-01-01` : a.date || "1970-01-01").getTime();
-      const db = new Date(/^\d{4}$/.test(b.date || "") ? `${b.date}-01-01` : b.date || "1970-01-01").getTime();
+  const sortedAll = useMemo(() => {
+    return [...RELEASES].sort((a, b) => {
+      const da = new Date(normalizeForSort(a.date)).getTime();
+      const db = new Date(normalizeForSort(b.date)).getTime();
       return db - da;
     });
+  }, []);
 
-    if (filter === "All") return sorted;
+  const releases = useMemo(() => {
+    if (filter === "All") return sortedAll;
 
     if (filter === "Colab") {
-      return sorted.filter((r) => r.type === "Colab" || r.colab === true);
+      return sortedAll.filter((r) => r.type === "Colab" || r.colab === true);
     }
 
-    return sorted.filter((r) => r.type === filter);
-  }, [filter]);
+    return sortedAll.filter((r) => r.type === filter);
+  }, [filter, sortedAll]);
 
   // normaliza urls y genera embed a partir de youtube si faltase
   const releasesNormalized = useMemo(() => {
@@ -237,9 +260,95 @@ export default function ReleasesPage() {
     });
   }, [releases]);
 
+  /* ---------- SEO: JSON-LD (CollectionPage + ItemList + MusicRecording/MusicAlbum) ---------- */
+  const jsonLd = useMemo(() => {
+    const baseUrl = "https://realmotioncartel.com";
+    const pageUrl = `${baseUrl}/releases`;
+
+    // Construimos desde el catálogo completo (sortedAll), no desde el filtro UI.
+    const listItems = sortedAll.map((r, idx) => {
+      const url = `${pageUrl}#${encodeURIComponent(r.id)}`;
+      const artists = splitArtists(r.artist);
+
+      const youtube = cleanUrl(r.youtube);
+      const spotify = cleanUrl(r.spotify);
+      const sameAs = [spotify, youtube].filter(Boolean);
+
+      const hasCover = typeof r.cover === "string" && r.cover.trim().length > 0;
+      const imageUrl = hasCover ? `${baseUrl}${r.cover}` : undefined;
+
+      const isoDate = isISODateYYYYMMDD(r.date) ? r.date : undefined;
+
+      const typeLower = String(r.type || "").toLowerCase();
+      const item =
+        typeLower === "ep"
+          ? {
+              "@type": "MusicAlbum",
+              name: r.title,
+              albumReleaseType: "EP",
+              byArtist: artists.map((name) => ({ "@type": "MusicGroup", name })),
+              url,
+              ...(isoDate ? { datePublished: isoDate } : {}),
+              ...(imageUrl ? { image: imageUrl } : {}),
+              ...(sameAs.length ? { sameAs } : {}),
+            }
+          : {
+              "@type": "MusicRecording",
+              name: r.title,
+              byArtist: artists.map((name) => ({ "@type": "MusicGroup", name })),
+              url,
+              ...(isoDate ? { datePublished: isoDate } : {}),
+              ...(imageUrl ? { image: imageUrl } : {}),
+              ...(sameAs.length ? { sameAs } : {}),
+            };
+
+      return {
+        "@type": "ListItem",
+        position: idx + 1,
+        url,
+        item,
+      };
+    });
+
+    return {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          "@id": `${pageUrl}#collection`,
+          url: pageUrl,
+          name: "Catálogo oficial de lanzamientos | Real Motion Cartel",
+          description:
+            "Catálogo oficial de lanzamientos publicados bajo Real Motion Cartel: singles, EPs y colaboraciones.",
+          isPartOf: {
+            "@type": "WebSite",
+            "@id": `${baseUrl}#website`,
+            url: baseUrl,
+            name: "Real Motion Cartel",
+          },
+        },
+        {
+          "@type": "ItemList",
+          "@id": `${pageUrl}#itemlist`,
+          name: "Releases — Real Motion Cartel",
+          itemListOrder: "https://schema.org/ItemListOrderDescending",
+          numberOfItems: listItems.length,
+          itemListElement: listItems,
+        },
+      ],
+    };
+  }, [sortedAll]);
+
   return (
     <>
       <Navbar />
+
+      <Script
+        id="rmc-releases-jsonld"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       <MotionConfig
         transition={
@@ -277,17 +386,43 @@ export default function ReleasesPage() {
                 Catálogo oficial
               </p>
 
+              {/* ✅ H1 único */}
               <h1 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white">
-                Releases — Real Motion Cartel
+                Catálogo oficial de lanzamientos
               </h1>
 
               <p className="mt-3 text-zinc-300 max-w-3xl mx-auto text-sm sm:text-base leading-relaxed">
-                Este catálogo recoge los lanzamientos oficiales publicados bajo
-                Real Motion Cartel. Proyectos desarrollados entre{" "}
+                Archivo curado de lanzamientos publicados bajo Real Motion Cartel.
+                Proyectos desarrollados entre{" "}
                 <span className="text-white/90 font-semibold">Madrid</span> y{" "}
                 <span className="text-white/90 font-semibold">Canarias</span>,
                 con visión independiente y una identidad creativa común.
               </p>
+
+              {/* ✅ Enlazado interno */}
+              <nav
+                aria-label="Enlaces clave"
+                className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3"
+              >
+                <Link
+                  href="/artists"
+                  className="inline-flex items-center justify-center rounded-full px-6 h-11 text-sm font-medium border border-white/15 text-zinc-100 hover:bg-white/10 transition"
+                >
+                  Ver Artistas
+                </Link>
+                <Link
+                  href="/news"
+                  className="inline-flex items-center justify-center rounded-full px-6 h-11 text-sm font-medium border border-white/15 text-zinc-100 hover:bg-white/10 transition"
+                >
+                  Ver News
+                </Link>
+                <Link
+                  href="/about"
+                  className="inline-flex items-center justify-center rounded-full px-6 h-11 text-sm font-medium border border-white/15 text-zinc-100 hover:bg-white/10 transition"
+                >
+                  Sobre RMC
+                </Link>
+              </nav>
             </motion.div>
 
             {/* Controls */}
@@ -298,7 +433,7 @@ export default function ReleasesPage() {
               viewport={{ once: true, amount: 0.4 }}
               className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
             >
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filtrar releases">
                 {filters.map((f) => {
                   const active = filter === f;
                   return (
@@ -311,6 +446,7 @@ export default function ReleasesPage() {
                           ? "border-white/25 bg-white/10 text-white"
                           : "border-white/10 bg-white/5 text-zinc-300 hover:bg-white/10",
                       ].join(" ")}
+                      aria-pressed={active}
                     >
                       {f === "All" ? "Todos" : f}
                     </button>
@@ -337,6 +473,7 @@ export default function ReleasesPage() {
         {/* GRID */}
         <section aria-labelledby="releases-grid-title">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+            {/* ✅ H2 real */}
             <motion.h2
               id="releases-grid-title"
               className="text-xl sm:text-2xl font-semibold tracking-tight"
@@ -374,13 +511,15 @@ export default function ReleasesPage() {
                   </div>
                 ) : (
                   releasesNormalized.map((r) => {
-                    const hasCover = typeof r.cover === "string" && r.cover.trim().length > 0;
+                    const hasCover =
+                      typeof r.cover === "string" && r.cover.trim().length > 0;
 
                     return (
                       <motion.article
                         key={r.id}
+                        id={r.id} // ✅ ancla estable para JSON-LD y prensa
                         variants={cardVariant}
-                        className="rounded-2xl overflow-hidden border border-white/10 bg-white/5"
+                        className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 scroll-mt-24"
                       >
                         {/* Cover */}
                         <div className="relative aspect-[4/5] overflow-hidden">
@@ -391,6 +530,7 @@ export default function ReleasesPage() {
                               fill
                               className="object-cover"
                               sizes="(max-width: 768px) 92vw, 420px"
+                              quality={95}
                             />
                           ) : (
                             <div className="absolute inset-0 flex items-center justify-center bg-black/40">
@@ -416,9 +556,11 @@ export default function ReleasesPage() {
                             <p className="text-[11px] uppercase tracking-[0.16em] text-zinc-300/80">
                               {r.artist}
                             </p>
-                            <p className="mt-0.5 text-sm sm:text-base font-semibold text-white line-clamp-2">
+
+                            {/* ✅ H3 dentro de cada card (la página ya tiene H1/H2) */}
+                            <h3 className="mt-0.5 text-sm sm:text-base font-semibold text-white line-clamp-2">
                               {r.title}
-                            </p>
+                            </h3>
                           </div>
                         </div>
 
@@ -485,8 +627,8 @@ export default function ReleasesPage() {
               whileInView="show"
               viewport={{ once: true, amount: 0.2 }}
             >
-              Nota: este listado refleja lanzamientos oficiales de RMC. Si un
-              medio necesita confirmación o datos de prensa, escribir a{" "}
+              Nota: este listado refleja lanzamientos oficiales de RMC. Si un medio
+              necesita confirmación o datos de prensa, escribir a{" "}
               <span className="text-white/90 font-semibold">
                 info@realmotioncartel.com
               </span>
