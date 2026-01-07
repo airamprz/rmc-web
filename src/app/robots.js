@@ -6,7 +6,6 @@ export default function robots() {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/reservar"],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
