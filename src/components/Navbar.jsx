@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
-import { SiInstagram } from "react-icons/si";
+import { SiInstagram, SiTiktok } from "react-icons/si";
 import { HiLockClosed } from "react-icons/hi2";
 
 /* ===============================
@@ -52,7 +52,6 @@ export default function Navbar() {
         {...props}
         className={clsx(
           "relative px-3 py-2 text-sm uppercase tracking-wide transition-colors",
-          "rounded-none",
           disabled
             ? "cursor-not-allowed text-zinc-500"
             : "text-zinc-300 hover:text-white",
@@ -70,7 +69,6 @@ export default function Navbar() {
           />
         )}
 
-        {/* Active underline (LV style) */}
         {!disabled && active && (
           <span
             aria-hidden
@@ -109,7 +107,7 @@ export default function Navbar() {
           </ul>
 
           {/* Desktop socials */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center gap-4">
             <a
               href="https://instagram.com/realmotioncartel"
               target="_blank"
@@ -118,6 +116,16 @@ export default function Navbar() {
               className="text-zinc-300 hover:text-white transition"
             >
               <SiInstagram size={18} />
+            </a>
+
+            <a
+              href="https://www.tiktok.com/@realmotioncartel"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="TikTok"
+              className="text-zinc-300 hover:text-white transition"
+            >
+              <SiTiktok size={18} />
             </a>
           </div>
 
@@ -193,6 +201,17 @@ export default function Navbar() {
                 className="flex items-center gap-2 text-sm text-zinc-300 hover:text-white transition"
               >
                 <SiInstagram size={18} />
+                <span>@realmotioncartel</span>
+              </a>
+
+              <a
+                href="https://www.tiktok.com/@realmotioncartel"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2 text-sm text-zinc-300 hover:text-white transition"
+              >
+                <SiTiktok size={18} />
                 <span>@realmotioncartel</span>
               </a>
             </div>
