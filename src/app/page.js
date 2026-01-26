@@ -390,7 +390,7 @@ export default function HomePage() {
                 </h2>
 
                 <p className="mt-4 text-zinc-300 text-sm sm:text-base">
-                  Primer lanzamiento oficial de merch de Real Motion Cartel.
+                  Primer lanzamiento oficial de Real Motion Cartel.
                   Edición concebida como extensión directa del universo RMC.
                 </p>
 
