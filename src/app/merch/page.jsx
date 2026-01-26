@@ -1,71 +1,87 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
 import Navbar from "@/components/Navbar";
-import Image from "next/image";
 
-/* ---------------- DATA ---------------- */
+/* ===============================
+   DATA
+================================ */
 
-const products = [
-  {
-    id: "rmc-merch-01",
-    name: "RMC Merch · First Drop",
-    status: "coming_soon",
-    image: "/merch/merch1.png",
-    desc: "Primer drop oficial de Real Motion Cartel. Unidades limitadas. Calidad premium. Diseño alineado con el ADN del movimiento.",
-  },
-];
+const DROP_DATE = "2026-01-30T21:00:00+01:00";
 
-function StatusPill() {
-  return (
-    <span className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs text-zinc-200">
-      Próximamente
-    </span>
-  );
+const product = {
+  id: "rmc-first-drop",
+  name: "RMC · First Drop",
+  image: "/merch/merch1.png",
+  description:
+    "Primer drop oficial de Real Motion Cartel. Unidades ilimitadas. Producción cuidada. Diseño alineado con el ADN del movimiento.",
+};
+
+/* ===============================
+   COUNTDOWN HOOK (JSX safe)
+================================ */
+
+function useCountdown(targetDate) {
+  const [time, setTime] = useState(null);
+
+  useEffect(() => {
+    const target = new Date(targetDate).getTime();
+
+    const tick = () => {
+      const now = Date.now();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        setTime(null);
+        return false;
+      }
+
+      setTime({
+        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((diff / (1000 * 60)) % 60),
+        seconds: Math.floor((diff / 1000) % 60),
+      });
+
+      return true;
+    };
+
+    // first paint immediately (no 1s delay)
+    tick();
+
+    const interval = setInterval(() => {
+      const keepGoing = tick();
+      if (!keepGoing) clearInterval(interval);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  return time;
 }
 
+/* ===============================
+   PAGE
+================================ */
+
 export default function MerchPage() {
-  // JSON-LD: Merch como CollectionPage + ItemList de Products
+  const countdown = useCountdown(DROP_DATE);
+
   const jsonLd = {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "CollectionPage",
-        name: "Merch oficial | Real Motion Cartel",
-        url: "https://realmotioncartel.com/merch",
-        description:
-          "Drops limitados de merch oficial de Real Motion Cartel. Piezas seleccionadas como extensión del universo RMC.",
-        isPartOf: {
-          "@type": "WebSite",
-          name: "Real Motion Cartel",
-          url: "https://realmotioncartel.com",
-        },
-      },
-      {
-        "@type": "ItemList",
-        name: "Productos de merch — Real Motion Cartel",
-        itemListOrder: "http://schema.org/ItemListOrderAscending",
-        numberOfItems: products.length,
-        itemListElement: products.map((p, idx) => ({
-          "@type": "ListItem",
-          position: idx + 1,
-          item: {
-            "@type": "Product",
-            name: p.name,
-            description: p.desc,
-            image: p.image ? `https://realmotioncartel.com${p.image}` : undefined,
-            brand: { "@type": "Brand", name: "Real Motion Cartel" },
-            offers: {
-              "@type": "Offer",
-              availability: "https://schema.org/PreOrder",
-              priceCurrency: "EUR",
-              url: "https://realmotioncartel.com/merch",
-            },
-          },
-        })),
-      },
-    ],
+    "@type": "CollectionPage",
+    name: "Merch oficial | Real Motion Cartel",
+    url: "https://realmotioncartel.com/merch",
+    description:
+      "Drop oficial de merch de Real Motion Cartel. Piezas limitadas como extensión del universo RMC.",
+    isPartOf: {
+      "@type": "WebSite",
+      name: "Real Motion Cartel",
+      url: "https://realmotioncartel.com",
+    },
   };
 
   return (
@@ -79,127 +95,137 @@ export default function MerchPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <main className="relative min-h-screen bg-gradient-to-b from-black via-black to-zinc-950">
-        {/* Glow suave */}
-        <div className="pointer-events-none absolute inset-x-0 top-32 mx-auto h-64 max-w-4xl rounded-full bg-emerald-500/10 blur-3xl" />
+      <main className="relative min-h-screen bg-black text-white">
+        {/* Background glow */}
+        <div className="pointer-events-none absolute inset-0 flex justify-center">
+          <div className="mt-32 h-72 w-[600px] rounded-full bg-emerald-500/10 blur-3xl" />
+        </div>
 
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-24 pb-16 space-y-12">
-          {/* Header */}
-          <header className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">
-              Real Motion Cartel · Merch
+        <div className="relative mx-auto max-w-6xl px-6 pt-28 pb-20 space-y-24">
+          {/* ===============================
+              HEADER
+          =============================== */}
+          <header className="space-y-6 max-w-3xl">
+            <p className="text-xs uppercase tracking-[0.35em] text-zinc-500">
+              Real Motion Cartel
             </p>
 
-            {/* ✅ H1 único y claro */}
-            <h1 className="text-3xl sm:text-4xl font-semibold text-white">
-              Merch oficial de Real Motion Cartel
+            <h1 className="text-4xl sm:text-5xl font-semibold leading-tight">
+              First Drop
             </h1>
 
-            <p className="max-w-2xl text-sm sm:text-base text-zinc-300">
-              Drops limitados. Piezas seleccionadas como extensión del universo RMC.
-              El primer lanzamiento se anunciará pronto.
+            <p className="text-base sm:text-lg text-zinc-300">
+              El primer lanzamiento oficial de Real Motion Cartel. Una
+              edición limitada concebida como parte del universo RMC.
             </p>
 
-            {/* ✅ Internal links (SEO + UX) */}
-            <div className="pt-3 flex flex-col sm:flex-row gap-3">
-              <Link
-                href="/releases"
-                className="inline-flex items-center justify-center rounded-full px-6 h-11 text-sm font-medium border border-white/15 text-zinc-100 hover:bg-white/10 transition"
-              >
-                Ver catálogo (Releases)
-              </Link>
-              <Link
-                href="/news"
-                className="inline-flex items-center justify-center rounded-full px-6 h-11 text-sm font-medium border border-white/15 text-zinc-100 hover:bg-white/10 transition"
-              >
-                Comunicados (News)
-              </Link>
+            <div className="flex gap-4 pt-2">
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center rounded-full px-6 h-11 text-sm font-medium border border-white/15 text-zinc-100 hover:bg-white/10 transition"
+                className="text-sm text-zinc-400 hover:text-white transition"
               >
                 Sobre RMC
+              </Link>
+
+              <Link
+                href="https://www.instagram.com/realmotioncartel"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-zinc-400 hover:text-white transition"
+              >
+                Instagram
               </Link>
             </div>
           </header>
 
-          {/* ✅ H2 para estructura */}
-          <section aria-labelledby="merch-list-title" className="space-y-4">
-            <h2 id="merch-list-title" className="sr-only">
-              Productos de merch disponibles próximamente
-            </h2>
+          {/* ===============================
+              COUNTDOWN
+          =============================== */}
+          {countdown ? (
+            <section className="max-w-xl">
+              <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
+                Lanzamiento
+              </p>
 
-            {/* LISTA DE PRODUCTOS */}
-            <div className="divide-y divide-white/10 rounded-3xl border border-white/10 overflow-hidden bg-white/[0.02]">
-              {products.map((product, idx) => (
-                <article
-                  key={product.id}
-                  className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6 p-6 sm:p-8"
-                >
-                  {/* Imagen */}
-                  <div className="relative aspect-square w-full max-w-[280px]">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      className="object-cover rounded-2xl border border-white/10"
-                      // ✅ tamaños realistas para que Next entregue buena resolución
-                      sizes="(max-width: 768px) 70vw, 280px"
-                      // ✅ prioridad solo al primer item
-                      priority={idx === 0}
-                    />
-                  </div>
-
-                  {/* Info */}
-                  <div className="flex flex-col justify-between gap-4">
-                    <div className="space-y-3">
-                      <div className="flex items-center flex-wrap gap-3">
-                        <h3 className="text-xl sm:text-2xl font-semibold text-white">
-                          {product.name}
-                        </h3>
-                        <StatusPill />
-                      </div>
-
-                      <p className="text-sm sm:text-base text-zinc-300 max-w-xl">
-                        {product.desc}
-                      </p>
-
-                      <p className="text-xs text-zinc-500 max-w-xl">
-                        Nota: el link de compra y la fecha se anuncian vía canales oficiales.
-                        Sin preventas abiertas por ahora.
-                      </p>
+              <div className="mt-6 grid grid-cols-4 gap-4">
+                {[
+                  { label: "Días", value: countdown.days },
+                  { label: "Horas", value: countdown.hours },
+                  { label: "Min", value: countdown.minutes },
+                  { label: "Seg", value: countdown.seconds },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="border border-white/10 rounded-2xl bg-white/[0.03] py-5 text-center"
+                  >
+                    <div className="text-3xl font-semibold">
+                      {String(item.value).padStart(2, "0")}
                     </div>
-
-                    <div className="flex flex-col sm:flex-row gap-3">
-                      <button
-                        type="button"
-                        disabled
-                        className="inline-flex items-center justify-center rounded-full px-6 h-11 text-sm font-medium border border-white/10 bg-white/5 text-zinc-500 cursor-not-allowed"
-                      >
-                        Disponible próximamente
-                      </button>
-
-                      <a
-                        href="https://www.instagram.com/realmotioncartel"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center rounded-full px-6 h-11 text-sm text-zinc-100 border border-white/15 hover:bg-white/10 transition"
-                      >
-                        Seguir drops en Instagram
-                      </a>
+                    <div className="mt-1 text-xs text-zinc-500">
+                      {item.label}
                     </div>
                   </div>
-                </article>
-              ))}
+                ))}
+              </div>
+
+              <p className="mt-4 text-xs text-zinc-500">
+                30 de enero de 2026 · 21:00 (hora peninsular)
+              </p>
+            </section>
+          ) : (
+            <section className="max-w-xl">
+              <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
+                Lanzamiento
+              </p>
+              <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+                <p className="text-sm text-zinc-300">
+                  El drop ya está activo.
+                </p>
+              </div>
+            </section>
+          )}
+
+          {/* ===============================
+              PRODUCT
+          =============================== */}
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div className="relative aspect-square w-full">
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                className="object-cover rounded-3xl border border-white/10"
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+
+            <div className="space-y-6">
+              <h2 className="text-2xl sm:text-3xl font-semibold">
+                {product.name}
+              </h2>
+
+              <p className="text-zinc-300 max-w-md">{product.description}</p>
+
+              <p className="text-xs text-zinc-500 max-w-md">
+                No hay preventa. El acceso se habilitará en el momento del
+                lanzamiento a través de los canales oficiales.
+              </p>
+
+              <button
+                disabled
+                className="mt-4 inline-flex items-center justify-center rounded-full px-8 h-12 text-sm font-medium border border-white/10 bg-white/5 text-zinc-500 cursor-not-allowed"
+              >
+                Disponible próximamente
+              </button>
             </div>
           </section>
 
-          {/* Footer */}
-          <footer className="pt-6 text-center text-xs text-zinc-500">
-            <p>La fecha y el link de compra se anunciarán en @realmotioncartel.</p>
-            <p className="mt-2">
-              © {new Date().getFullYear()} Real Motion Cartel.
-            </p>
+          {/* ===============================
+              FOOTER
+          =============================== */}
+          <footer className="pt-12 text-center text-xs text-zinc-500">
+            © {new Date().getFullYear()} Real Motion Cartel
           </footer>
         </div>
       </main>

@@ -51,6 +51,46 @@ const cardVariant = {
   },
 };
 
+/* ---------- Countdown (home-safe) ---------- */
+const DROP_DATE = "2026-01-30T21:00:00+01:00";
+
+function useCountdown(targetDate) {
+  const [time, setTime] = useState(null);
+
+  useEffect(() => {
+    const target = new Date(targetDate).getTime();
+
+    const tick = () => {
+      const now = Date.now();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        setTime(null);
+        return false;
+      }
+
+      setTime({
+        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((diff / (1000 * 60)) % 60),
+        seconds: Math.floor((diff / 1000) % 60),
+      });
+
+      return true;
+    };
+
+    tick();
+    const interval = setInterval(() => {
+      if (!tick()) clearInterval(interval);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  return time;
+}
+
+
 /* ---------- Helpers ---------- */
 function cleanUrl(url) {
   if (!url) return "";
@@ -71,6 +111,16 @@ function cleanUrl(url) {
 const LAST_RELEASES = [
   {
     tag: "Single",
+    title: "509flakko x BG01 - Side by Side",
+    yt: "https://www.youtube-nocookie.com/embed/iR4qJG932i0",
+  },
+  {
+    tag: "Single",
+    title: "Y SI SE ACABA EL MUNDO - AKAELPERI",
+    yt: "https://www.youtube-nocookie.com/embed/CiuBm9SkFYk?si=rNUatCevSDHzSfKk",
+  },
+  {
+    tag: "Single",
     title: "BG01 — NONSTOPPA ft Waitta38",
     yt: "https://www.youtube-nocookie.com/embed/w5JnEZxQz_s",
   },
@@ -81,11 +131,6 @@ const LAST_RELEASES = [
   },
   {
     tag: "Single",
-    title: "Star Feeling — Sheyla Langa (feat. Bravo Steez)",
-    yt: "https://www.youtube-nocookie.com/embed/Jv3VSEAOSBY",
-  },
-  {
-    tag: "Single",
     title: "NO ME CONOCE — PERI X CODE X SORIA",
     yt: "https://www.youtube-nocookie.com/embed/68o7eChhOpU",
   },
@@ -93,11 +138,6 @@ const LAST_RELEASES = [
     tag: "Single",
     title: "BG01 — GHETTO",
     yt: "https://www.youtube-nocookie.com/embed/n_Pfo3FcPyY",
-  },
-  {
-    tag: "Single",
-    title: "Star Haze — Watta Like ft. Sheyla Langa (prod. Bravo Steez)",
-    yt: "https://www.youtube-nocookie.com/embed/PxN6LkhLI2w",
   },
   {
     tag: "Single",
@@ -152,6 +192,8 @@ const UPCOMING = [
 
 export default function HomePage() {
   const prefersReduced = useReducedMotion();
+  const countdown = useCountdown(DROP_DATE);
+
 
   // JSON-LD (entidad + website). Minimal, limpio y útil para buscadores/IA.
   const jsonLd = {
@@ -302,15 +344,104 @@ export default function HomePage() {
               >
                 Ver roster (Artists)
               </Link>
-              <Link
-                href="/news"
-                className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10 transition"
-              >
-                Leer comunicados (News)
-              </Link>
             </motion.div>
           </div>
         </section>
+
+        {/* NUEVO DROP */}
+        <section
+          aria-labelledby="drop-title"
+          className="border-t border-white/10 bg-black"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
+            <motion.div
+              className="grid gap-8 md:grid-cols-2 md:items-center"
+              variants={fadeUp}
+              initial={false}
+              whileInView="show"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              {/* Imagen */}
+              <motion.div
+                variants={cardVariant}
+                className="relative aspect-square w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5"
+              >
+                <Image
+                  src="/merch/merch1.png"
+                  alt="RMC First Drop — Merch oficial"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
+                />
+              </motion.div>
+
+              {/* Texto + countdown */}
+              <div className="max-w-xl">
+                <p className="text-xs uppercase tracking-[0.35em] text-zinc-500">
+                  Comunicado
+                </p>
+
+                <h2
+                  id="drop-title"
+                  className="mt-3 text-2xl sm:text-3xl font-semibold text-white"
+                >
+                  Nuevo drop · RMC First Drop
+                </h2>
+
+                <p className="mt-4 text-zinc-300 text-sm sm:text-base">
+                  Primer lanzamiento oficial de merch de Real Motion Cartel.
+                  Edición concebida como extensión directa del universo RMC.
+                </p>
+
+                {/* Countdown */}
+                {countdown ? (
+                  <div className="mt-6">
+                    <p className="text-xs uppercase tracking-[0.3em] text-zinc-500 mb-3">
+                      Lanzamiento
+                    </p>
+
+                    <div className="grid grid-cols-4 gap-3 max-w-md">
+                      {[
+                        { label: "Días", value: countdown.days },
+                        { label: "Horas", value: countdown.hours },
+                        { label: "Min", value: countdown.minutes },
+                        { label: "Seg", value: countdown.seconds },
+                      ].map((item) => (
+                        <div
+                          key={item.label}
+                          className="rounded-xl border border-white/10 bg-white/5 py-3 text-center"
+                        >
+                          <div className="text-xl font-semibold">
+                            {String(item.value).padStart(2, "0")}
+                          </div>
+                          <div className="mt-1 text-[10px] text-zinc-500 uppercase">
+                            {item.label}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <p className="mt-6 text-xs text-zinc-500">
+                    El drop ya está activo.
+                  </p>
+                )}
+
+                <div className="mt-6">
+                  <Link
+                    href="/merch"
+                    className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 px-4 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-white/10 transition"
+                  >
+                    Ver información del drop →
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+
 
         {/* QUÉ ES RMC */}
         <section aria-labelledby="about-title" className="border-t border-white/10">
@@ -448,92 +579,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* LANZAMIENTO DESTACADO */}
-        <section
-          id="featured-release"
-          aria-labelledby="featured-release-title"
-          className="border-y border-white/10 bg-gradient-to-b from-black via-black to-white/5"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center">
-            <motion.div
-              variants={fadeUp}
-              initial={false}
-              whileInView="show"
-              viewport={{ once: true, amount: 0.4 }}
-            >
-              <p className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.09em] text-emerald-200">
-                Ya disponible
-                <span className="h-1 w-1 rounded-full bg-emerald-300" />
-              </p>
 
-              <h2
-                id="featured-release-title"
-                className="mt-4 text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-white"
-              >
-                Una Noche Con Un G —{" "}
-                <span className="text-zinc-300">509flakko ft BigFicre</span>
-              </h2>
-
-              <p className="mt-4 text-sm sm:text-base text-zinc-300 max-w-xl leading-relaxed">
-                Lanzamiento oficial de Real Motion Cartel. Disponible en plataformas.
-              </p>
-
-              <div className="mt-6 flex flex-wrap items-center gap-4">
-                <a
-                  href="https://open.spotify.com/track/0rtp8A6fmCZS5RDy1SIzCr"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-xl border border-emerald-400/30 bg-emerald-400/15 px-5 py-3 text-sm font-semibold text-emerald-200 hover:bg-emerald-400/25 transition"
-                >
-                  Escuchar en Spotify
-                </a>
-
-                <a
-                  href="https://www.youtube.com/watch?v=lulGDouNy4A"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10 transition"
-                >
-                  Ver en YouTube
-                </a>
-
-                <Link
-                  href="/releases"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10 transition"
-                >
-                  Abrir catálogo
-                </Link>
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={cardVariant}
-              initial={false}
-              whileInView="show"
-              viewport={{ once: true, amount: 0.4 }}
-              className="relative max-w-md w-full mx-auto rounded-3xl overflow-hidden border border-white/10 bg-white/5 shadow-[0_18px_60px_rgba(0,0,0,0.75)]"
-            >
-              <div className="relative aspect-[4/5]">
-                <Image
-                  src="/covers/una-noche-con-un-g.jpg"
-                  alt="Portada del single Una Noche Con Un G"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 80vw, 400px"
-                />
-
-                <div className="absolute top-3 right-3 rounded-2xl border border-emerald-400/40 bg-black/80 px-3 py-2 text-right backdrop-blur">
-                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-emerald-300">
-                    Out now
-                  </p>
-                  <p className="text-sm sm:text-base font-semibold text-white leading-tight">
-                    Disponible
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
 
         {/* ÚLTIMOS LANZAMIENTOS */}
         <section aria-labelledby="last-title" className="border-y border-white/10">

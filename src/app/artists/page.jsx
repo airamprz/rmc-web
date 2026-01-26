@@ -38,15 +38,6 @@ const ARTISTS = [
     ig: "https://www.instagram.com/fermoralesp6",
   },
   {
-    id: "yaiza-deniz",
-    name: "Yaiza Deniz",
-    roles: ["Dirección creativa", "Identidad visual", "Concepto"],
-    about:
-      "Define y supervisa la identidad visual de RMC. Lidera propuestas conceptuales y asegura coherencia estética en campañas, sesiones y piezas.",
-    img: "/artists/yaiza.jpg",
-    ig: "https://www.instagram.com/ydenizmed",
-  },
-  {
     id: "monru",
     name: "Monru",
     roles: ["Operations Coordinator", "Talent Support", "Estrategia & Organización"],
@@ -103,24 +94,6 @@ const ARTISTS = [
     ig: "https://www.instagram.com/elseviii09",
   },
   {
-    id: "sheila",
-    name: "Sheila Langa",
-    roles: ["Voz", "Compositora"],
-    about:
-      "Voz cálida y presencia natural. Enfoque melódico y emocional con autenticidad y conexión directa.",
-    img: "/artists/sheila1.jpg",
-    ig: "https://www.instagram.com/sheilalanga_",
-  },
-  {
-    id: "darlyn-sirii",
-    name: "Darlyn Sirii",
-    roles: ["Voz", "Compositor"],
-    about:
-      "Artista dominicano afincado en Madrid. Mezcla trap, reggaetón y hip hop melódico con letras personales y callejeras.",
-    img: "/artists/darlyn.jpg",
-    ig: "https://www.instagram.com/darlynsirii",
-  },
-  {
     id: "cb-one",
     name: "CB ONE",
     roles: ["Voz", "Compositor"],
@@ -173,15 +146,6 @@ const ARTISTS = [
       "Perfil emergente de reggaetón con soltura vocal, melodías pegadizas y sensibilidad urbana. Versátil y en crecimiento.",
     img: "/artists/akaelperi.jpg",
     ig: "https://www.instagram.com/miguelmillanpp",
-  },
-  {
-    id: "waitta38",
-    name: "Waitta38",
-    roles: ["Rapper", "Compositor"],
-    about:
-      "Criado en el sur de Madrid. Sonido reservado pero directo: drill, hoodtrap, trap romántico y sad/real rap con enfoque auténtico.",
-    img: "/artists/0waitta38.jpg",
-    ig: "https://www.instagram.com/0waitta38",
   },
 ];
 

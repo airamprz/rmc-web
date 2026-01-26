@@ -2,6 +2,7 @@ import "./globals.css";
 import { Roboto_Mono } from "next/font/google";
 import Script from "next/script";
 import WhatsappButton from "@/components/WhatsappButton";
+import TopAnnouncementBar from "@/components/TopAnnouncementBar";
 
 const robotoMono = Roboto_Mono({
   subsets: ["latin"],
@@ -9,28 +10,19 @@ const robotoMono = Roboto_Mono({
   display: "swap",
 });
 
-/**
- * Cambia esto a tu dominio final.
- * Recomendado: https://realmotioncartel.com
- * Temporal (si aún no está): https://realmotioncartel.vercel.app
- */
 const SITE_URL = "https://realmotioncartel.com";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
-
   title: {
     default: "Real Motion Cartel (RMC) — Sello musical y colectivo creativo",
     template: "%s — Real Motion Cartel (RMC)",
   },
-
   description:
-    "Real Motion Cartel (RMC) es un sello musical independiente y colectivo creativo con base en Madrid y conexión directa con Canarias. Música urbana, dirección creativa y producción audiovisual.",
-
+    "Real Motion Cartel (RMC) es un sello musical independiente y colectivo creativo con base en Madrid y conexión directa con Canarias.",
   applicationName: "Real Motion Cartel (RMC)",
   generator: "Next.js",
   referrer: "origin-when-cross-origin",
-
   keywords: [
     "Real Motion Cartel",
     "RMC",
@@ -39,32 +31,20 @@ export const metadata = {
     "colectivo creativo",
     "Madrid",
     "Canarias",
-    "Lanzarote",
     "música urbana",
     "trap",
-    "Detroit trap",
     "reggaetón",
-    "producción musical",
-    "producción audiovisual",
-    "dirección creativa",
-    "desarrollo artístico",
     "merch",
     "streetwear",
   ],
-
   authors: [{ name: "Real Motion Cartel", url: SITE_URL }],
   creator: "Real Motion Cartel",
   publisher: "Real Motion Cartel",
-
-  alternates: {
-    canonical: "/",
-  },
-
+  alternates: { canonical: "/" },
   icons: {
     icon: [{ url: "/logo.png" }],
     apple: [{ url: "/logo.png" }],
   },
-
   robots: {
     index: true,
     follow: true,
@@ -76,11 +56,10 @@ export const metadata = {
       "max-video-preview": -1,
     },
   },
-
   openGraph: {
     title: "Real Motion Cartel (RMC) — Sello musical y colectivo creativo",
     description:
-      "Sello musical independiente y colectivo creativo con base en Madrid y conexión directa con Canarias. Catálogo oficial, artistas y lanzamientos.",
+      "Sello musical independiente y colectivo creativo con base en Madrid y conexión directa con Canarias.",
     url: SITE_URL,
     siteName: "Real Motion Cartel",
     images: [
@@ -94,19 +73,12 @@ export const metadata = {
     locale: "es_ES",
     type: "website",
   },
-
   twitter: {
     card: "summary_large_image",
     title: "Real Motion Cartel (RMC) — Sello musical y colectivo creativo",
     description:
       "Sello musical independiente y colectivo creativo con base en Madrid y conexión directa con Canarias.",
     images: ["/og-image.png"],
-  },
-
-  // Si en el futuro verificas Search Console / Pinterest, rellena esto:
-  verification: {
-    google: "", // "TOKEN"
-    // other: { "msvalidate.01": "TOKEN" }
   },
 };
 
@@ -121,7 +93,7 @@ export default function RootLayout({ children }) {
     sameAs: ["https://instagram.com/realmotioncartel"],
     description:
       "Sello musical independiente y colectivo creativo con base en Madrid y conexión directa con Canarias.",
-    areaServed: ["ES", "Canarias", "Madrid", "Lanzarote"],
+    areaServed: ["ES", "Canarias", "Madrid"],
   };
 
   return (
@@ -136,7 +108,9 @@ export default function RootLayout({ children }) {
       </head>
 
       <body className="bg-black text-white antialiased font-sans">
-        <div className="min-h-dvh pt-16">
+        <TopAnnouncementBar />
+
+        <div className="min-h-dvh pt-[calc(4rem+2.25rem)]">
           {children}
           <WhatsappButton />
         </div>
