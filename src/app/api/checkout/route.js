@@ -15,8 +15,7 @@ export async function POST(req) {
       );
     }
 
-    // 🔥 URL ABSOLUTA HARDCODEADA (TEST)
-    const BASE_URL = "https://www.realmotioncartel.com";
+    const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL;
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
