@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import clsx from "clsx";
 
 const MESSAGES = [
-  "ENVÍOS A TODA EUROPA",
+  "PAGO A PLAZOS CON KLARNA DISPONIBLE",
   "ENVÍOS GRATIS POR COMPRAS SUPERIORES A 50€",
 ];
 

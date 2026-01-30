@@ -1,88 +1,70 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import Script from "next/script";
 import Navbar from "@/components/Navbar";
 
-/* ===============================
-   DATA
-================================ */
-
-const DROP_DATE = "2026-01-30T21:00:00+01:00";
-
-const product = {
-  id: "rmc-first-drop",
-  name: "RMC · First Drop",
-  image: "/merch/merch1.png",
+const PRODUCT = {
+  id: "rmc-drop-01-tee",
+  name: "RMC DROP 01 – T-Shirt",
   description:
-    "Primer drop oficial de Real Motion Cartel. Unidades ilimitadas. Producción cuidada. Diseño alineado con el ADN del movimiento.",
+    "DROP 01 de Real Motion Cartel. Edición limitada. Producción cuidada.",
+  priceMain: "33 €",
+  priceNoteMain: "Envío nacional incluido",
+  priceNoteSecondary: "Recogida en Madrid disponible · 25 €",
+  images: {
+    black: "/merch/merch1.png",
+    white: "/merch/merch2.png",
+  },
+  colors: [
+    { key: "black", label: "Black" },
+    { key: "white", label: "White" },
+  ],
+  sizes: ["S", "M", "L", "XL"],
 };
 
-/* ===============================
-   COUNTDOWN HOOK (JSX safe)
-================================ */
+export default function MerchPage() {
+  const [color, setColor] = useState("black");
+  const [size, setSize] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [showPriceInfo, setShowPriceInfo] = useState(false);
 
-function useCountdown(targetDate) {
-  const [time, setTime] = useState(null);
+  const productImage = useMemo(
+    () => PRODUCT.images[color],
+    [color]
+  );
 
-  useEffect(() => {
-    const target = new Date(targetDate).getTime();
+  async function handleCheckout() {
+    if (!size) {
+      setError("Selecciona una talla.");
+      return;
+    }
 
-    const tick = () => {
-      const now = Date.now();
-      const diff = target - now;
+    try {
+      setLoading(true);
+      setError("");
 
-      if (diff <= 0) {
-        setTime(null);
-        return false;
-      }
-
-      setTime({
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((diff / (1000 * 60)) % 60),
-        seconds: Math.floor((diff / 1000) % 60),
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          color,
+          size,
+          quantity: 1,
+        }),
       });
 
-      return true;
-    };
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
 
-    // first paint immediately (no 1s delay)
-    tick();
-
-    const interval = setInterval(() => {
-      const keepGoing = tick();
-      if (!keepGoing) clearInterval(interval);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [targetDate]);
-
-  return time;
-}
-
-/* ===============================
-   PAGE
-================================ */
-
-export default function MerchPage() {
-  const countdown = useCountdown(DROP_DATE);
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: "Merch oficial | Real Motion Cartel",
-    url: "https://realmotioncartel.com/merch",
-    description:
-      "Drop oficial de merch de Real Motion Cartel. Piezas limitadas como extensión del universo RMC.",
-    isPartOf: {
-      "@type": "WebSite",
-      name: "Real Motion Cartel",
-      url: "https://realmotioncartel.com",
-    },
-  };
+      window.location.href = data.url;
+    } catch (err) {
+      setError(err.message || "Error al iniciar el pago.");
+      setLoading(false);
+    }
+  }
 
   return (
     <>
@@ -92,143 +74,200 @@ export default function MerchPage() {
         id="rmc-merch-jsonld"
         type="application/ld+json"
         strategy="afterInteractive"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: PRODUCT.name,
+            description: PRODUCT.description,
+          }),
+        }}
       />
 
-      <main className="relative min-h-screen bg-black text-white">
-        {/* Background glow */}
-        <div className="pointer-events-none absolute inset-0 flex justify-center">
-          <div className="mt-32 h-72 w-[600px] rounded-full bg-emerald-500/10 blur-3xl" />
-        </div>
-
-        <div className="relative mx-auto max-w-6xl px-6 pt-28 pb-20 space-y-24">
-          {/* ===============================
-              HEADER
-          =============================== */}
-          <header className="space-y-6 max-w-3xl">
+      <main className="min-h-screen bg-black text-white">
+        <div className="mx-auto max-w-6xl px-6 pt-28 pb-20">
+          {/* HEADER */}
+          <header className="mb-20 max-w-3xl space-y-6">
             <p className="text-xs uppercase tracking-[0.35em] text-zinc-500">
               Real Motion Cartel
             </p>
 
-            <h1 className="text-4xl sm:text-5xl font-semibold leading-tight">
-              First Drop
+            <h1 className="text-4xl sm:text-5xl font-semibold">
+              DROP 01
             </h1>
 
-            <p className="text-base sm:text-lg text-zinc-300">
-              El primer lanzamiento oficial de Real Motion Cartel. Una
-              edición limitada concebida como parte del universo RMC.
+            <p className="text-zinc-300">
+              El primer lanzamiento oficial de Real Motion Cartel.
+              Una pieza concebida como extensión del universo RMC.
             </p>
-
-            <div className="flex gap-4 pt-2">
-              <Link
-                href="/about"
-                className="text-sm text-zinc-400 hover:text-white transition"
-              >
-                Sobre RMC
-              </Link>
-
-              <Link
-                href="https://www.instagram.com/realmotioncartel"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-zinc-400 hover:text-white transition"
-              >
-                Instagram
-              </Link>
-            </div>
           </header>
 
-          {/* ===============================
-              COUNTDOWN
-          =============================== */}
-          {countdown ? (
-            <section className="max-w-xl">
-              <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
-                Lanzamiento
-              </p>
-
-              <div className="mt-6 grid grid-cols-4 gap-4">
-                {[
-                  { label: "Días", value: countdown.days },
-                  { label: "Horas", value: countdown.hours },
-                  { label: "Min", value: countdown.minutes },
-                  { label: "Seg", value: countdown.seconds },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="border border-white/10 rounded-2xl bg-white/[0.03] py-5 text-center"
-                  >
-                    <div className="text-3xl font-semibold">
-                      {String(item.value).padStart(2, "0")}
-                    </div>
-                    <div className="mt-1 text-xs text-zinc-500">
-                      {item.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <p className="mt-4 text-xs text-zinc-500">
-                30 de enero de 2026 · 21:00 (hora peninsular)
-              </p>
-            </section>
-          ) : (
-            <section className="max-w-xl">
-              <p className="text-xs uppercase tracking-[0.3em] text-zinc-500">
-                Lanzamiento
-              </p>
-              <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-                <p className="text-sm text-zinc-300">
-                  El drop ya está activo.
-                </p>
-              </div>
-            </section>
-          )}
-
-          {/* ===============================
-              PRODUCT
-          =============================== */}
+          {/* PRODUCT */}
           <section className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            {/* IMAGE */}
             <div className="relative aspect-square w-full">
               <Image
-                src={product.image}
-                alt={product.name}
+                src={productImage}
+                alt={`${PRODUCT.name} ${color}`}
                 fill
-                className="object-cover rounded-3xl border border-white/10"
                 priority
-                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover rounded-3xl border border-white/10"
               />
             </div>
 
-            <div className="space-y-6">
-              <h2 className="text-2xl sm:text-3xl font-semibold">
-                {product.name}
-              </h2>
+            {/* INFO */}
+            <div className="space-y-8">
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-semibold">
+                  {PRODUCT.name}
+                </h2>
 
-              <p className="text-zinc-300 max-w-md">{product.description}</p>
+                <p className="mt-2 text-zinc-300 max-w-md">
+                  {PRODUCT.description}
+                </p>
+
+                {/* PRICE */}
+                <div className="mt-4 space-y-1">
+                  <p className="text-3xl font-semibold">
+                    {PRODUCT.priceMain}
+                  </p>
+                  <p className="text-sm text-zinc-300">
+                    {PRODUCT.priceNoteMain}
+                  </p>
+                  <p className="text-xs text-zinc-500">
+                    {PRODUCT.priceNoteSecondary}
+                  </p>
+
+                  <button
+                    onClick={() => setShowPriceInfo(true)}
+                    className="mt-1 text-xs text-zinc-400 underline hover:text-white transition"
+                  >
+                    Ver información de precio
+                  </button>
+                </div>
+              </div>
+
+              {/* COLOR */}
+              <div className="space-y-2">
+                <p className="text-xs uppercase tracking-widest text-zinc-500">
+                  Color
+                </p>
+                <div className="flex gap-3">
+                  {PRODUCT.colors.map((c) => (
+                    <button
+                      key={c.key}
+                      onClick={() => setColor(c.key)}
+                      className={`h-10 px-4 rounded-full text-sm border transition ${
+                        color === c.key
+                          ? "border-white text-white"
+                          : "border-white/10 text-zinc-400 hover:text-white"
+                      }`}
+                    >
+                      {c.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* SIZE */}
+              <div className="space-y-2">
+                <p className="text-xs uppercase tracking-widest text-zinc-500">
+                  Talla
+                </p>
+                <div className="flex gap-3 flex-wrap">
+                  {PRODUCT.sizes.map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => setSize(s)}
+                      className={`h-10 w-10 rounded-full text-sm border transition ${
+                        size === s
+                          ? "border-white text-white"
+                          : "border-white/10 text-zinc-400 hover:text-white"
+                      }`}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* ERROR */}
+              {error && (
+                <p className="text-sm text-red-400">{error}</p>
+              )}
+
+              {/* CTA */}
+              <button
+                onClick={handleCheckout}
+                disabled={!size || loading}
+                className={`h-12 px-10 rounded-full text-sm font-medium transition ${
+                  size && !loading
+                    ? "bg-white text-black hover:bg-zinc-200"
+                    : "border border-white/10 bg-white/5 text-zinc-500 cursor-not-allowed"
+                }`}
+              >
+                {loading ? "Redirigiendo…" : "Comprar"}
+              </button>
 
               <p className="text-xs text-zinc-500 max-w-md">
-                No hay preventa. El acceso se habilitará en el momento del
-                lanzamiento a través de los canales oficiales.
+                La selección de color y talla queda registrada en tu pedido.
               </p>
-
-              <button
-                disabled
-                className="mt-4 inline-flex items-center justify-center rounded-full px-8 h-12 text-sm font-medium border border-white/10 bg-white/5 text-zinc-500 cursor-not-allowed"
-              >
-                Disponible próximamente
-              </button>
             </div>
           </section>
 
-          {/* ===============================
-              FOOTER
-          =============================== */}
-          <footer className="pt-12 text-center text-xs text-zinc-500">
+          {/* FOOTER */}
+          <footer className="pt-20 text-center text-xs text-zinc-500">
             © {new Date().getFullYear()} Real Motion Cartel
           </footer>
         </div>
       </main>
+
+      {/* PRICE INFO MODAL */}
+      {showPriceInfo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-black p-6 text-white">
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold">
+                Información de precio
+              </h3>
+
+              <p className="text-sm text-zinc-300">
+                El precio base de la camiseta es de <strong>25 €</strong>.
+              </p>
+
+              <p className="text-sm text-zinc-300">
+                Para pedidos con envío nacional, el precio final es de{" "}
+                <strong>33 €</strong>, incluyendo gastos de envío.
+              </p>
+
+              <p className="text-sm text-zinc-300">
+                Si te encuentras en Madrid, la entrega puede realizarse
+                en mano por <strong>25 €</strong>.
+              </p>
+
+              <p className="text-sm text-zinc-300">
+                En caso de entrega en Madrid, los <strong>8 € correspondientes
+                al envío se reembolsan automáticamente</strong> al mismo método
+                de pago utilizado en la compra.
+              </p>
+
+              <p className="text-xs text-zinc-500">
+                El importe mostrado en el checkout corresponde al precio
+                final con envío.
+              </p>
+            </div>
+
+            <div className="mt-6 flex justify-end">
+              <button
+                onClick={() => setShowPriceInfo(false)}
+                className="rounded-full border border-white/10 px-4 py-2 text-sm text-zinc-300 hover:text-white transition"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
