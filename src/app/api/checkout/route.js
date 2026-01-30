@@ -15,14 +15,8 @@ export async function POST(req) {
       );
     }
 
-    // 🔒 Base URL segura (fallback incluido)
-    const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL ||
-      "https://www.realmotioncartel.com";
-
-    if (!baseUrl.startsWith("https://")) {
-      throw new Error("NEXT_PUBLIC_SITE_URL inválida");
-    }
+    // 🔥 URL ABSOLUTA HARDCODEADA (TEST)
+    const BASE_URL = "https://www.realmotioncartel.com";
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
@@ -40,8 +34,8 @@ export async function POST(req) {
 
       billing_address_collection: "required",
 
-      success_url: `${baseUrl}/merch?success=1`,
-      cancel_url: `${baseUrl}/merch?canceled=1`,
+      success_url: `${BASE_URL}/merch?success=1`,
+      cancel_url: `${BASE_URL}/merch?canceled=1`,
 
       metadata: {
         drop: "DROP 01",
@@ -58,9 +52,7 @@ export async function POST(req) {
     console.error("Stripe checkout error:", err);
 
     return new Response(
-      JSON.stringify({
-        error: "No se pudo iniciar el pago",
-      }),
+      JSON.stringify({ error: err.message }),
       { status: 500 }
     );
   }
