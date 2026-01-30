@@ -15,7 +15,7 @@ export async function POST(req) {
       );
     }
 
-    const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL;
+    const BASE_URL = "https://www.realmotioncartel.com";
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
@@ -49,7 +49,6 @@ export async function POST(req) {
     );
   } catch (err) {
     console.error("Stripe checkout error:", err);
-
     return new Response(
       JSON.stringify({ error: err.message }),
       { status: 500 }
