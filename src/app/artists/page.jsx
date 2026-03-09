@@ -103,7 +103,7 @@ const ARTISTS = [
   {
     id: "649babywhite",
     name: "649babywhite",
-    roles: ["Artist", "Voz", "Rapero", "Compositor"],
+    roles: ["Artist", "Voz", "Compositor"],
     about:
       "Estética underground con influencia Detroit. Flows cortantes, patrones frenéticos y energía cruda del midwest.",
     img: "/artists/babywhite.jpg",
@@ -130,7 +130,7 @@ const ARTISTS = [
   {
     id: "akaelperi",
     name: "AKAELPERI",
-    roles: ["Artist", "Voz", "Cantante", "Compositora"],
+    roles: ["Artist", "Voz", "Compositora"],
     about:
       "Perfil emergente de reggaetón con soltura vocal, melodías pegadizas y sensibilidad urbana. Versátil y en crecimiento.",
     img: "/artists/akaelperi.jpg",
