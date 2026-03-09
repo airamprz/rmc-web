@@ -53,6 +53,15 @@ const ARTISTS = [
     img: "/artists/arboleda.jpg",
     ig: "https://www.instagram.com/arboledafx",
   },
+  {
+    id: "fran-mancini",
+    name: "Fran Mancini",
+    roles: ["Logistics Support"],
+    about:
+      "Apoyo logístico puntual dentro de Real Motion Cartel. Colabora en tareas operativas presenciales y soporte local cuando se requiere.",
+    img: null,
+    ig: "https://www.instagram.com/_franmancini/",
+  },
 
   // Artists
   {
@@ -78,7 +87,7 @@ const ARTISTS = [
     name: "ElSevi09",
     roles: ["Artist", "Voz", "Compositor"],
     about:
-      "Sonido callejero y directo. Letras de vivencia real y carácter crudo que refuerzan el perfil urbano del sello.",
+      "Sonido callejero y directo. Letras de vivencia real y carácter crudo que refuerza el perfil urbano del sello.",
     img: "/artists/elsevi.jpg",
     ig: "https://www.instagram.com/elseviii09",
   },
@@ -273,6 +282,9 @@ function ArtistCard({ artist }) {
   const { name, roles, about, img, ig } = artist;
   const [imgError, setImgError] = useState(false);
 
+  const hasImage = typeof img === "string" && img.trim().length > 0;
+  const showPlaceholder = !hasImage || imgError;
+
   const isLink = typeof ig === "string" && ig.trim().length > 0;
   const Wrapper = isLink ? "a" : "div";
   const wrapperProps = isLink
@@ -291,9 +303,16 @@ function ArtistCard({ artist }) {
       className="group rounded-2xl overflow-hidden border border-white/10 bg-white/5 hover:bg-white/10 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
     >
       <div className="relative aspect-[4/5] overflow-hidden cursor-pointer">
-        {imgError ? (
+        {showPlaceholder ? (
           <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-white/10 to-transparent text-zinc-200">
-            <span className="text-sm">Imagen próximamente</span>
+            <div className="text-center px-4">
+              <span className="block text-sm uppercase tracking-[0.18em] text-zinc-400">
+                RMC
+              </span>
+              <span className="mt-2 block text-base font-medium text-white/90">
+                Próximamente
+              </span>
+            </div>
           </div>
         ) : (
           <Image
