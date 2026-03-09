@@ -140,17 +140,6 @@ function splitArtists(raw) {
 /* ---------- DATA ---------- */
 const RELEASES = [
   {
-    id: "sincity",
-    type: "Single",
-    artist: "Flakko, 1Guilthy, Jayco ",
-    title: "Sin City",
-    date: "2026-01-24",
-    cover: "/covers/sincity.JPG",
-    spotify: "https://open.spotify.com/track/3QZfftVd17ZJ1F5C73h1ax",
-    youtube: "https://www.youtube.com/watch?v=2g48V90Iqjg",
-    colab: true,
-  },
-  {
     id: "sidebyside",
     type: "Single",
     artist: "Flakko, BG01 ",
