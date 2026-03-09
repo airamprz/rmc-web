@@ -130,7 +130,7 @@ const ARTISTS = [
   {
     id: "akaelperi",
     name: "AKAELPERI",
-    roles: ["Artist", "Voz", "Compositora"],
+    roles: ["Artist", "Voz", "Compositor"],
     about:
       "Perfil emergente de reggaetón con soltura vocal, melodías pegadizas y sensibilidad urbana. Versátil y en crecimiento.",
     img: "/artists/akaelperi.jpg",
